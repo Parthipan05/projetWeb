@@ -63,7 +63,7 @@ require_once("./includes/header.inc.php");
     // 3. On demande à PHP de charger et lire le fichier XML
     // La fonction simplexml_load_file() est magique : elle transforme le XML en un objet PHP facile à lire
     // Le "@" devant permet de cacher les vilaines erreurs PHP si l'API est en panne ou si ta clé est fausse
-    $donnees_geo = @simplexml_load_file($url);
+    $donnees_geo = simplexml_load_file($url);
 
     // 4. On vérifie qu'on a bien reçu une réponse avant d'afficher
     if ($donnees_geo !== false) {
