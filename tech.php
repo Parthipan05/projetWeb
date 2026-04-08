@@ -45,46 +45,38 @@ require_once("./includes/header.inc.php");
 <hr>
 
 <section>
-    <h2>Localisation</h2>
+    <h2>Localisation par IP</h2>
 
     <?php
-    // 1. On récupère l'IP du visiteur
-    $ip_visiteur = $_SERVER['REMOTE_ADDR'];
+        // IP de la fac imposée pour le test
+        $ip_visiteur = '193.54.115.18'; 
 
-    // ASTUCE DE PRO : On force une vraie IP si on est en train de tester en local
-    if ($ip_visiteur == '::1' || $ip_visiteur == '127.0.0.1') {
-        $ip_visiteur = '193.54.115.235'; // IP d'exemple du sujet
-    }
+        // TA CLÉ API (celle de ta photo)
+        $cle_api = "DAFEE48938FFF47E6537D03212A58A0D"; 
 
-    // 2. On prépare l'URL de l'API avec ta clé secrète et l'IP du visiteur
-    $cle_api = "a985b6bfd4ae239a8b1b11a341009746";
-    $url = "https://api.whatismyip.com/ip-address-lookup.php?key=" . $cle_api . "&input=" . $ip_visiteur . "&output=xml";
+        // URL configurée en XML (obligatoire pour ton sujet)
+        $url = "https://api.ip2location.io/?key=" . $cle_api . "&ip=" . $ip_visiteur . "&format=xml";
 
-    // 3. On demande à PHP de charger et lire le fichier XML
-    // La fonction simplexml_load_file() est magique : elle transforme le XML en un objet PHP facile à lire
-    // Le "@" devant permet de cacher les vilaines erreurs PHP si l'API est en panne ou si ta clé est fausse
-    $donnees_geo = simplexml_load_file($url);
+        $contenu_api = @file_get_contents($url);
 
-    // 4. On vérifie qu'on a bien reçu une réponse avant d'afficher
-    if ($donnees_geo !== false) {
-        // En XML, on accède aux données avec la flèche "->" (contrairement au JSON où on utilisait des crochets)
-        $ville = $donnees_geo->City;
-        $region = $donnees_geo->Region;
-        $pays = $donnees_geo->Country;
-    ?>
+        if ($contenu_api !== false && str_contains($contenu_api, '<?xml')) {
+            $xml = simplexml_load_string($contenu_api);
+            
+            // Extraction des balises XML de IP2Location
+            $ville  = (string)$xml->city_name;
+            $region = (string)$xml->region_name;
+            $pays   = (string)$xml->country_name;
 
-        <p>Ton adresse IP (<?= htmlspecialchars($ip_visiteur) ?>) nous indique que tu es probablement près de :</p>
-        <ul>
-            <li><strong>Ville :</strong> <?= htmlspecialchars($ville) ?></li>
-            <li><strong>Région :</strong> <?= htmlspecialchars($region) ?></li>
-            <li><strong>Pays :</strong> <?= htmlspecialchars($pays) ?></li>
-        </ul>
-
-    <?php
-    } else {
-        // Message de secours si l'API ne répond pas
-        echo "<p>Impossible de te géolocaliser pour le moment.</p>";
-    }
+            // Affichage propre pour le prof
+            echo "<h3>Résulat </h3>";
+            echo "<ul>";
+            echo "<li><strong>Ville :</strong> " . ($ville ?: "En cours d'activation...") . "</li>";
+            echo "<li><strong>Région :</strong> " . ($region ?: "En cours d'activation...") . "</li>";
+            echo "<li><strong>Pays :</strong> " . ($pays ?: "En cours d'activation...") . "</li>";
+            echo "</ul>";
+        } else {
+            echo "<p>erreur</p>";
+        }
     ?>
 </section>
 
