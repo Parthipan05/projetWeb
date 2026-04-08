@@ -58,7 +58,6 @@ require_once("./includes/header.inc.php");
 
 
     // 2. On prépare l'URL de l'API avec ta clé secrète et l'IP du visiteur
-    //SALOPEEEEEEEEEEEEE
     $cle_api = "TA_CLE_SECRETE_A_METTRE_ICI";
     $url = "https://api.whatismyip.com/ip-address-lookup.php?key=" . $cle_api . "&input=" . $ip_visiteur . "&output=xml";
 
