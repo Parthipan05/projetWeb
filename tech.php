@@ -62,9 +62,9 @@ require_once("./includes/header.inc.php");
     var_dump($donnees_geo->server_data->city); // ajoute cette ligne
 
     if ($donnees_geo !== false) {
-        $ville  = $donnees_geo->city;
-        $region = $donnees_geo->region;
-        $pays   = $donnees_geo->country;
+        $ville  = (string) $donnees_geo->server_data->city;
+        $region = (string) $donnees_geo->server_data->region;
+        $pays   = (string) $donnees_geo->server_data->country;
     ?>
         <p>Ton adresse IP (<?= htmlspecialchars($ip_visiteur) ?>) nous indique que tu es probablement près de :</p>
         <ul>
