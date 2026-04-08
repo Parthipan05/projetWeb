@@ -46,7 +46,7 @@ require_once("./includes/header.inc.php");
 <hr>
 
 <section>
-    <h2>D'où viens-tu ?</h2>
+    <h2>Localisation</h2>
 
     <?php
     // 1. On récupère l'IP du visiteur
