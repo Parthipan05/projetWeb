@@ -24,22 +24,21 @@ require_once("./includes/header.inc.php");
     $film = $films[$index_aleatoire];
     ?>
 
-    <h3><?= htmlspecialchars($film['title']) ?> <!--<?php echo $variable; ?> -->
-        <p lang="ja"><?= htmlspecialchars($film['original_title']) ?></p>
-        <p><strong>Année de sortie :</strong> <?= htmlspecialchars($film['release_date']) ?></p>
-        <p><strong>Description :</strong> <?= htmlspecialchars($film['description']) ?></p>
+    <h3><?= htmlspecialchars($film['title']) ?> </h3>
+    <p lang="ja"><?= htmlspecialchars($film['original_title']) ?></p>
+    <p><strong>Année de sortie :</strong> <?= htmlspecialchars($film['release_date']) ?></p>
+    <p><strong>Description :</strong> <?= htmlspecialchars($film['description']) ?></p>
 
-        <figure>
-            <img src="<?= htmlspecialchars($film['image']) ?>"
-                alt="Affiche du film <?= htmlspecialchars($film['title']) ?>">
-            <figcaption>Affiche — <?= htmlspecialchars($film['title']) ?></figcaption>
-        </figure>
+    <figure>
+        <img src="<?= htmlspecialchars($film['image']) ?>" alt="Affiche du film <?= htmlspecialchars($film['title']) ?>">
+        <figcaption>Affiche — <?= htmlspecialchars($film['title']) ?></figcaption>
+    </figure>
 
-        <figure>
-            <img src="<?= htmlspecialchars($film['movie_banner']) ?>"
-                alt="Bannière du film <?= htmlspecialchars($film['title']) ?>">
-            <figcaption>Bannière — <?= htmlspecialchars($film['title']) ?></figcaption>
-        </figure>
+    <figure>
+        <img src="<?= htmlspecialchars($film['movie_banner']) ?>"
+            alt="Bannière du film <?= htmlspecialchars($film['title']) ?>">
+        <figcaption>Bannière — <?= htmlspecialchars($film['title']) ?></figcaption>
+    </figure>
 </section>
 
 
