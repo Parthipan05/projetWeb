@@ -58,7 +58,8 @@ require_once("./includes/header.inc.php");
 
     $contenu_brut = file_get_contents($url);
     $donnees_geo = simplexml_load_string($contenu_brut);
-    echo "<pre>" . htmlspecialchars($contenu_brut) . "</pre>";
+
+    var_dump($donnees_geo->server_data->city); // ajoute cette ligne
 
     if ($donnees_geo !== false) {
         $ville  = $donnees_geo->city;
