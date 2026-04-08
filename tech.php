@@ -19,26 +19,27 @@ require_once("./includes/header.inc.php");
     // 3. array_rand() sélectionne une "case" (un index) au hasard dans notre tableau de films
     $index_aleatoire = array_rand($films);
 
+
     // 4. On isole le film gagnant du tirage au sort dans une variable $film pour l'afficher plus bas
     $film = $films[$index_aleatoire];
     ?>
 
-    <h3><?= htmlspecialchars($film['title']) ?>              <!--<?php echo $variable; ?> -->
-    <p lang="ja"><?= htmlspecialchars($film['original_title']) ?></p>
-    <p><strong>Année de sortie :</strong> <?= htmlspecialchars($film['release_date']) ?></p>
-    <p><strong>Description :</strong> <?= htmlspecialchars($film['description']) ?></p>
+    <h3><?= htmlspecialchars($film['title']) ?> <!--<?php echo $variable; ?> -->
+        <p lang="ja"><?= htmlspecialchars($film['original_title']) ?></p>
+        <p><strong>Année de sortie :</strong> <?= htmlspecialchars($film['release_date']) ?></p>
+        <p><strong>Description :</strong> <?= htmlspecialchars($film['description']) ?></p>
 
-    <figure>
-        <img src="<?= htmlspecialchars($film['image']) ?>"
-            alt="Affiche du film <?= htmlspecialchars($film['title']) ?>">
-        <figcaption>Affiche — <?= htmlspecialchars($film['title']) ?></figcaption>
-    </figure>
+        <figure>
+            <img src="<?= htmlspecialchars($film['image']) ?>"
+                alt="Affiche du film <?= htmlspecialchars($film['title']) ?>">
+            <figcaption>Affiche — <?= htmlspecialchars($film['title']) ?></figcaption>
+        </figure>
 
-    <figure>
-        <img src="<?= htmlspecialchars($film['movie_banner']) ?>"
-            alt="Bannière du film <?= htmlspecialchars($film['title']) ?>">
-        <figcaption>Bannière — <?= htmlspecialchars($film['title']) ?></figcaption>
-    </figure>
+        <figure>
+            <img src="<?= htmlspecialchars($film['movie_banner']) ?>"
+                alt="Bannière du film <?= htmlspecialchars($film['title']) ?>">
+            <figcaption>Bannière — <?= htmlspecialchars($film['title']) ?></figcaption>
+        </figure>
 </section>
 
 
@@ -56,6 +57,7 @@ require_once("./includes/header.inc.php");
         $ip_visiteur = '193.54.115.235'; // IP d'exemple du sujet
     }
 
+
     // 2. On prépare l'URL de l'API avec ta clé secrète et l'IP du visiteur
     $cle_api = "TA_CLE_SECRETE_A_METTRE_ICI";
     $url = "https://api.whatismyip.com/ip-address-lookup.php?key=" . $cle_api . "&input=" . $ip_visiteur . "&output=xml";
@@ -71,8 +73,8 @@ require_once("./includes/header.inc.php");
         $ville = $donnees_geo->City;
         $region = $donnees_geo->Region;
         $pays = $donnees_geo->Country;
-        ?>
-        
+    ?>
+
         <p>Ton adresse IP (<?= htmlspecialchars($ip_visiteur) ?>) nous indique que tu es probablement près de :</p>
         <ul>
             <li><strong>Ville :</strong> <?= htmlspecialchars($ville) ?></li>
@@ -80,11 +82,11 @@ require_once("./includes/header.inc.php");
             <li><strong>Pays :</strong> <?= htmlspecialchars($pays) ?></li>
         </ul>
 
-    <?php 
+    <?php
     } else {
         // Message de secours si l'API ne répond pas
         echo "<p>Impossible de te géolocaliser pour le moment.</p>";
-    } 
+    }
     ?>
 </section>
 
