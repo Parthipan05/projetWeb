@@ -6,7 +6,7 @@ require_once("./includes/header.inc.php");
 
 
 <section>
-    <h2> Film Ghibli aléatoire pour test</h2>
+    <h2> Film Ghibli aléatoire</h2>
 
     <?php
     // 1. On récupère les données brutes (flux JSON) directement depuis l'URL de l'API
