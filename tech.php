@@ -61,9 +61,9 @@ require_once("./includes/header.inc.php");
     echo "<pre>" . htmlspecialchars($contenu_brut) . "</pre>";
 
     if ($donnees_geo !== false) {
-        $ville  = $donnees_geo->City;
-        $region = $donnees_geo->Region;
-        $pays   = $donnees_geo->Country;
+        $ville  = $donnees_geo->city;
+        $region = $donnees_geo->region;
+        $pays   = $donnees_geo->country;
     ?>
         <p>Ton adresse IP (<?= htmlspecialchars($ip_visiteur) ?>) nous indique que tu es probablement près de :</p>
         <ul>
