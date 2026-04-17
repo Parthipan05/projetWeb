@@ -1,0 +1,311 @@
+/* ============================================================
+   StationFinder - Feuille de style principale
+   Auteurs : PIRABAKARAN Parthipan & HANANE Sanaa
+   Date : 2026
+   Description : Charte graphique dark mode du site StationFinder
+   ============================================================ */
+
+/* --- Variables CSS (couleurs principales) --- */
+:root {
+    --couleur-fond: #0f0f1a;
+    --couleur-fond-secondaire: #1a1a2e;
+    --couleur-carte: #16213e;
+    --couleur-primaire: #e94560;
+    --couleur-secondaire: #0f3460;
+    --couleur-texte: #eaeaea;
+    --couleur-texte-discret: #a0a0b0;
+    --couleur-bordure: #2a2a4a;
+    --couleur-succes: #4caf50;
+    --couleur-lien: #e94560;
+    --police-principale: Arial, Helvetica, sans-serif;
+    --rayon-bordure: 8px;
+}
+
+/* --- Reset de base --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --- Corps de la page --- */
+body {
+    background-color: var(--couleur-fond);
+    color: var(--couleur-texte);
+    font-family: var(--police-principale);
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- En-tête --- */
+.site-header {
+    background-color: var(--couleur-fond-secondaire);
+    border-bottom: 2px solid var(--couleur-primaire);
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.site-header .logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--couleur-primaire);
+    text-decoration: none;
+    letter-spacing: 2px;
+}
+
+.site-header .logo span {
+    color: var(--couleur-texte);
+}
+
+/* --- Menu de navigation --- */
+.menu-principal ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.menu-principal ul li a {
+    color: var(--couleur-texte);
+    text-decoration: none;
+    font-size: 0.95em;
+    padding: 5px 10px;
+    border-radius: var(--rayon-bordure);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.menu-principal ul li a:hover {
+    background-color: var(--couleur-primaire);
+    color: #fff;
+}
+
+/* --- Barre options (mode jour/nuit + langue) --- */
+.barre-options {
+    background-color: var(--couleur-secondaire);
+    text-align: right;
+    padding: 6px 30px;
+    font-size: 0.85em;
+}
+
+.barre-options a {
+    color: var(--couleur-texte);
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.barre-options a:hover {
+    color: var(--couleur-primaire);
+}
+
+/* --- Conteneur principal --- */
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+    flex: 1;
+}
+
+/* --- Titres --- */
+h1 {
+    font-size: 2em;
+    color: var(--couleur-primaire);
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--couleur-bordure);
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.5em;
+    color: var(--couleur-texte);
+    margin-bottom: 15px;
+    margin-top: 30px;
+}
+
+h3 {
+    font-size: 1.2em;
+    color: var(--couleur-primaire);
+    margin-bottom: 10px;
+}
+
+/* --- Paragraphes --- */
+p {
+    margin-bottom: 12px;
+    color: var(--couleur-texte);
+}
+
+/* --- Liens --- */
+a {
+    color: var(--couleur-lien);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- Sections --- */
+section {
+    background-color: var(--couleur-carte);
+    border: 1px solid var(--couleur-bordure);
+    border-radius: var(--rayon-bordure);
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+/* --- Listes --- */
+ul, ol {
+    margin-left: 25px;
+    margin-bottom: 12px;
+}
+
+ul li, ol li {
+    margin-bottom: 6px;
+    color: var(--couleur-texte);
+}
+
+/* --- Tableaux --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+thead {
+    background-color: var(--couleur-secondaire);
+}
+
+th {
+    padding: 12px;
+    text-align: left;
+    color: var(--couleur-texte);
+    font-weight: bold;
+    border-bottom: 2px solid var(--couleur-primaire);
+}
+
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--couleur-bordure);
+    color: var(--couleur-texte);
+}
+
+tr:hover {
+    background-color: var(--couleur-fond-secondaire);
+}
+
+/* --- Formulaires --- */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-size: 0.95em;
+    color: var(--couleur-texte-discret);
+    margin-bottom: 4px;
+    display: block;
+}
+
+input, select, textarea {
+    background-color: var(--couleur-fond-secondaire);
+    border: 1px solid var(--couleur-bordure);
+    border-radius: var(--rayon-bordure);
+    color: var(--couleur-texte);
+    padding: 10px;
+    font-size: 1em;
+    width: 100%;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--couleur-primaire);
+}
+
+/* --- Boutons --- */
+button, .btn {
+    background-color: var(--couleur-primaire);
+    color: #fff;
+    border: none;
+    border-radius: var(--rayon-bordure);
+    padding: 10px 25px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover, .btn:hover {
+    background-color: #c73652;
+}
+
+/* --- Figures et images --- */
+figure {
+    margin: 15px 0;
+    text-align: center;
+}
+
+figure img {
+    max-width: 100%;
+    border-radius: var(--rayon-bordure);
+    border: 1px solid var(--couleur-bordure);
+}
+
+figcaption {
+    font-size: 0.85em;
+    color: var(--couleur-texte-discret);
+    margin-top: 6px;
+    font-style: italic;
+}
+
+/* --- Séparateur --- */
+hr {
+    border: none;
+    border-top: 1px solid var(--couleur-bordure);
+    margin: 30px 0;
+}
+
+/* --- Footer --- */
+footer {
+    background-color: var(--couleur-fond-secondaire);
+    border-top: 2px solid var(--couleur-primaire);
+    padding: 20px 30px;
+    text-align: center;
+    font-size: 0.85em;
+    color: var(--couleur-texte-discret);
+}
+
+footer a {
+    color: var(--couleur-primaire);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer p {
+    color: var(--couleur-texte-discret);
+    margin-bottom: 5px;
+}
+
+/* --- Mode alternatif (jour) --- */
+body.mode-jour {
+    --couleur-fond: #f5f5f5;
+    --couleur-fond-secondaire: #ffffff;
+    --couleur-carte: #ffffff;
+    --couleur-texte: #1a1a2e;
+    --couleur-texte-discret: #555566;
+    --couleur-bordure: #ddddee;
+    --couleur-secondaire: #0f3460;
+}
+
+/* --- Classes utilitaires --- */
+.texte-centre { text-align: center; }
+.texte-rouge  { color: var(--couleur-primaire); }
+.texte-discret { color: var(--couleur-texte-discret); font-size: 0.9em; }
+.marge-haut   { margin-top: 20px; }
