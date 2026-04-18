@@ -81,3 +81,38 @@ function lire_departements(string $fichier): array
 	fclose($handle);
 	return $departements;
 }
+/**
+ * @brief Lit le fichier CSV et retourne les statistiques de consultation.
+ *
+ * @param string $fichier Chemin vers le fichier CSV.
+ * @return array Tableau associatif [departement => nombre_consultations]
+ */
+function lire_statistiques(string $fichier): array
+{
+	$stats = [];
+
+	if (!file_exists($fichier)) {
+		return $stats;
+	}
+
+	$handle = fopen($fichier, 'r');
+	if ($handle === false) {
+		return $stats;
+	}
+
+	while (($ligne = fgetcsv($handle, 1000, ',')) !== false) {
+		if (isset($ligne[1]) && !empty(trim($ligne[1]))) {
+			$dep = 'dep_' . trim($ligne[1]);
+			if (isset($stats[$dep])) {
+				$stats[$dep]++;
+			} else {
+				$stats[$dep] = 1;
+			}
+		}
+	}
+
+	fclose($handle);
+	arsort($stats);
+
+	return $stats;
+}
