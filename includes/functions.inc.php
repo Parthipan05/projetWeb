@@ -28,7 +28,7 @@ function lire_regions(string $fichier): array
 	// On ignore la première ligne (en-tête des colonnes)
 	fgetcsv($handle, 1000, ',', '"');
 	// On lit ligne par ligne
-	while (($ligne = fgetcsv($handle, 1000, ',')) !== false) {
+	while (($ligne = fgetcsv($handle, 1000, ',', '"')) !== false) {
 		// $ligne[0] = REG (code région)
 		// $ligne[5] = NCCENR (nom avec accents)
 		$code = $ligne[0];
@@ -60,9 +60,9 @@ function lire_departements(string $fichier): array
 	}
 
 	// On ignore l'en-tête
-	fgetcsv($handle, 1000, ',');
+	fgetcsv($handle, 1000, ',', '"');
 
-	while (($ligne = fgetcsv($handle, 1000, ',')) !== false) {
+	while (($ligne = fgetcsv($handle, 1000, ',', '"')) !== false) {
 		// $ligne[0] = DEP (code département)
 		// $ligne[1] = REG (code région)
 		// $ligne[5] = NCCENR (nom avec accents)
@@ -99,7 +99,7 @@ function lire_statistiques(string $fichier): array
 		return $stats;
 	}
 
-	while (($ligne = fgetcsv($handle, 1000, ',')) !== false) {
+	while (($ligne = fgetcsv($handle, 1000, ',', '"')) !== false) {
 		if (isset($ligne[1]) && !empty(trim($ligne[1]))) {
 			$dep = 'dep_' . trim($ligne[1]);
 			if (isset($stats[$dep])) {
@@ -133,9 +133,9 @@ function lire_villes_par_departement(string $departement): array
 	}
 
 	// On ignore la première ligne (en-tête)
-	fgetcsv($handle, 1000, ',');
-
-	while (($ligne = fgetcsv($handle, 1000, ',')) !== false) {
+	fgetcsv($handle, 1000, ',', '"');
+	
+	while (($ligne = fgetcsv($handle, 1000, ',', '"')) !== false) {
 		// $ligne[0] = code_commune_insee
 		// $ligne[1] = nom_de_la_commune
 		// $ligne[2] = code_postal

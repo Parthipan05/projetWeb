@@ -17,6 +17,15 @@ $titre = "Accueil";
 $description = "StationFinder - Trouvez les prix des carburants près de chez vous";
 
 require_once("./includes/functions.inc.php");
+// Si département et ville sont choisis, on redirige vers resultats.php
+if (!empty($_GET['departement']) && !empty($_GET['ville'])) {
+	header("Location: resultats.php?departement=" . urlencode($_GET['departement'])
+		. "&region=" . urlencode($_GET['region'] ?? '')
+		. "&ville=" . urlencode($_GET['ville'])
+		. "&style=" . urlencode($_GET['style'] ?? 'standard')
+		. "&lang=" . urlencode($_GET['lang'] ?? 'fr'));
+	exit;
+}
 require_once("./includes/header.inc.php");
 
 // Lecture des fichiers CSV
@@ -72,7 +81,6 @@ if (!empty($departement_selectionne)) {
 	</figure>
 </section>
 
-<!-- Si une région est sélectionnée, on affiche ses départements -->
 <?php
 if (!empty($region_selectionnee) && isset($departements[$region_selectionnee])) {
 ?>
@@ -82,48 +90,27 @@ if (!empty($region_selectionnee) && isset($departements[$region_selectionnee])) 
 			<?= isset($regions[$region_selectionnee]) ? htmlspecialchars($regions[$region_selectionnee]) : $region_selectionnee ?>
 		</h2>
 
-		<form action="index.php" method="get">
-			<!-- On transmet la région, le style et la langue -->
+		<form action="index.php#choix-departement" method="get">
 			<input type="hidden" name="region" value="<?= $region_selectionnee ?>" />
 			<input type="hidden" name="style" value="<?= $styleUrl ?>" />
 			<input type="hidden" name="lang" value="<?= $lang ?>" />
 
 			<fieldset>
-				<legend>Choisissez votre département</legend>
+				<legend>Choisissez votre département et votre ville</legend>
 
 				<label for="departement">Département :</label>
-				<select name="departement" id="departement">
+				<select name="departement" id="departement" onchange="this.form.submit()">
 					<option value="">-- Sélectionnez un département --</option>
 					<?php foreach ($departements[$region_selectionnee] as $dep) { ?>
-						<option value="<?= htmlspecialchars($dep['code']) ?>">
+						<option value="<?= htmlspecialchars($dep['code']) ?>"
+							<?= ($dep['code'] === $departement_selectionne) ? 'selected' : '' ?>>
 							<?= htmlspecialchars($dep['code']) ?> — <?= htmlspecialchars($dep['nom']) ?>
 						</option>
 					<?php } ?>
 				</select>
 
-				<button type="submit" class="btn">Rechercher les stations ⛽</button>
-			</fieldset>
-		</form>
-	</section>
-<?php
-}
-
-if (!empty($departement_selectionne) && !empty($villes)) {
-?>
-	<section id="choix-ville">
-		<h2>Choisissez votre ville</h2>
-		<p><strong><?= count($villes) ?></strong> ville(s) disponible(s).</p>
-
-		<form action="resultats.php" method="get">
-			<input type="hidden" name="departement" value="<?= $departement_selectionne ?>" />
-			<input type="hidden" name="region" value="<?= $region_selectionnee ?>" />
-			<input type="hidden" name="style" value="<?= $styleUrl ?>" />
-			<input type="hidden" name="lang" value="<?= $lang ?>" />
-
-			<fieldset>
-				<legend>Votre ville</legend>
 				<label for="ville">Ville :</label>
-				<select name="ville" id="ville" required>
+				<select name="ville" id="ville" <?= empty($departement_selectionne) ? 'disabled' : '' ?> required>
 					<option value="">-- Sélectionnez une ville --</option>
 					<?php foreach ($villes as $nom_ville) { ?>
 						<option value="<?= htmlspecialchars($nom_ville) ?>">
@@ -131,7 +118,11 @@ if (!empty($departement_selectionne) && !empty($villes)) {
 						</option>
 					<?php } ?>
 				</select>
-				<button type="submit" class="btn">Voir les stations ⛽</button>
+
+				<button type="submit" class="btn" <?= empty($departement_selectionne) ? 'disabled' : '' ?>>
+					Voir les stations ⛽
+				</button>
+
 			</fieldset>
 		</form>
 	</section>
