@@ -26,8 +26,7 @@ function lire_regions(string $fichier): array
 	}
 
 	// On ignore la première ligne (en-tête des colonnes)
-	fgetcsv($handle, 1000, ',');
-
+	fgetcsv($handle, 1000, ',', '"');
 	// On lit ligne par ligne
 	while (($ligne = fgetcsv($handle, 1000, ',')) !== false) {
 		// $ligne[0] = REG (code région)
@@ -115,4 +114,79 @@ function lire_statistiques(string $fichier): array
 	arsort($stats);
 
 	return $stats;
+}
+
+/**
+ * @brief Lit le fichier CSV des communes et retourne la liste des villes
+ *        d'un département donné, triée alphabétiquement.
+ *
+ * @param string $departement Code du département (ex: "95", "2A").
+ * @return array Tableau trié des noms de communes.
+ */
+function lire_villes_par_departement(string $departement): array
+{
+	$villes = [];
+
+	$handle = fopen('./data/clean_postcodes.csv', 'r');
+	if ($handle === false) {
+		return $villes;
+	}
+
+	// On ignore la première ligne (en-tête)
+	fgetcsv($handle, 1000, ',');
+
+	while (($ligne = fgetcsv($handle, 1000, ',')) !== false) {
+		// $ligne[0] = code_commune_insee
+		// $ligne[1] = nom_de_la_commune
+		// $ligne[2] = code_postal
+
+		$code_postal = trim($ligne[2]);
+
+		// On compare les 2 premiers chiffres du code postal avec le département
+		if (substr($code_postal, 0, 2) === $departement) {
+			$nom = trim($ligne[1]);
+			if (!empty($nom)) {
+				$villes[] = $nom;
+			}
+		}
+	}
+
+	fclose($handle);
+	sort($villes);
+	return $villes;
+}
+
+/**
+ * @brief Enregistre une consultation dans le fichier CSV côté serveur.
+ *        Chaque ligne : horodatage, département, ville, IP du visiteur.
+ *
+ * @param string $departement Code du département consulté (ex: "95").
+ * @param string $ville       Nom de la ville consultée.
+ * @return bool true si l'écriture a réussi, false sinon.
+ */
+function enregistrer_consultation(string $departement, string $ville): bool
+{
+	// On récupère l'IP du visiteur (inconnue si non disponible)
+	$ip = $_SERVER['REMOTE_ADDR'] ?? 'inconnue';
+
+	// On formate l'horodatage au format lisible
+	$horodatage = date('Y-m-d H:i:s');
+
+	// On construit la ligne CSV avec les 4 colonnes entre guillemets
+	// pour gérer les noms de villes avec des virgules (ex: "Bourg-en-Bresse")
+	$ligne_csv = '"' . $horodatage . '"'
+			. ',' . $departement
+			. ',"' . addslashes($ville) . '"'
+			. ',' . $ip
+			. PHP_EOL;
+
+	// file_put_contents avec FILE_APPEND : ajoute à la fin sans écraser
+	$resultat = file_put_contents(
+		'./data/consultations.csv',
+		$ligne_csv,
+		FILE_APPEND
+	);
+
+	// file_put_contents retourne false si l'écriture a échoué
+	return ($resultat !== false);
 }
