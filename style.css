@@ -309,3 +309,38 @@ body.mode-jour {
 .texte-rouge  { color: var(--couleur-primaire); }
 .texte-discret { color: var(--couleur-texte-discret); font-size: 0.9em; }
 .marge-haut   { margin-top: 20px; }
+
+fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid var(--couleur-bordure);
+    border-radius: var(--rayon-bordure);
+    margin-bottom: 20px;
+}
+
+fieldset legend {
+    padding: 0 10px;
+    color: var(--couleur-primaire);
+    font-weight: bold;
+}
+
+fieldset label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    color: var(--couleur-texte);
+}
+
+fieldset input[type="checkbox"] {
+    width: auto;
+    cursor: pointer;
+}
+
+fieldset select {
+    width: auto;
+    padding: 6px 10px;
+}
