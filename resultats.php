@@ -86,7 +86,7 @@ if (isset($_COOKIE['derniere_consultation']) && !empty($_COOKIE['derniere_consul
 	// On filtre par département, et par ville si elle est renseignée
 	$filtre = "code_departement%3D%22" . urlencode($departement) . "%22";
 	if (!empty($ville)) {
-		$filtre .= "%20AND%20ville%3D%22" . urlencode($ville) . "%22";
+		$filtre .= "%20AND%20ville%3D%22" . rawurlencode($ville) . "%22";
 	}
 
 	$url_api = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?"
@@ -109,7 +109,7 @@ if (isset($_COOKIE['derniere_consultation']) && !empty($_COOKIE['derniere_consul
 		} else {
 			echo "<p>" . count($stations) . " station(s) trouvée(s) dans le département <strong>" . $departement . "</strong>.</p>";
 		}
-?>
+	?>
 
 		<table>
 			<thead>
@@ -125,7 +125,7 @@ if (isset($_COOKIE['derniere_consultation']) && !empty($_COOKIE['derniere_consul
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach ($stations as $station){ ?>
+				<?php foreach ($stations as $station) { ?>
 					<tr>
 						<td><?= htmlspecialchars($station['nom'] ?? 'N/A') ?></td>
 						<td><?= htmlspecialchars($station['adresse'] ?? 'N/A') ?></td>
