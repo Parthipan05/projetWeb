@@ -96,7 +96,7 @@ if (isset($_COOKIE['derniere_consultation']) && !empty($_COOKIE['derniere_consul
 		$filtre = "code_departement%3D%22" . rawurlencode($departement) . "%22";
 		if (!empty($ville)) {
 			$ville_api = trim($ville);
-			$filtre .= "%20AND%20ville%3D%22" . rawurlencode($ville_api) . "%22";
+			$filtre .= "%20AND%20suggest(ville%2C%22" . rawurlencode($ville_api) . "%22)";
 		}
 	} else {
 		$ville_api = trim($ville);
