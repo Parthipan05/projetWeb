@@ -32,6 +32,20 @@ require_once("./includes/header.inc.php");
 $regions = lire_regions("./data/v_region_2024.csv");
 $departements = lire_departements("./data/v_departement_2024.csv");
 
+// Géolocalisation automatique par IP
+$ville_geolocalisee = "";
+
+$ip_visiteur = $_SERVER['REMOTE_ADDR'] ?? '193.54.115.18';
+$cle_api = "DAFEE48938FFF47E6537D03212A58A0D";
+$url_geo = "https://api.ip2location.io/?key=" . $cle_api . "&ip=" . $ip_visiteur . "&format=xml";
+
+$contenu_geo = @file_get_contents($url_geo);
+if ($contenu_geo !== false && str_contains($contenu_geo, '<?xml')) {
+    $xml = simplexml_load_string($contenu_geo);
+    $ville_geolocalisee  = (string)$xml->city_name;
+    $region_geolocalisee = (string)$xml->region_name;
+}
+
 // Récupération de la région sélectionnée via GET
 $region_selectionnee = "";
 if (isset($_GET['region']) && !empty($_GET['region'])) {
@@ -52,6 +66,15 @@ if (!empty($departement_selectionne)) {
 ?>
 
 <h1>⛽ Bienvenue sur StationFinder</h1>
+
+<?php if (!empty($ville_geolocalisee) && !empty($region_geolocalisee)) { ?>
+    <section>
+        <p>📍 Vous semblez être à <strong><?= htmlspecialchars($ville_geolocalisee) ?></strong> 
+        (<?= htmlspecialchars($region_geolocalisee) ?>).</p>
+		<a href="resultats.php?ville=<?= urlencode($ville_geolocalisee) ?>&style=<?= $styleUrl ?>&lang=<?= $lang ?>" class="btn">            ⛽ Voir les stations près de moi
+        </a>
+    </section>
+<?php } ?>
 
 <section>
 	<h2>Sélectionnez votre région</h2>
