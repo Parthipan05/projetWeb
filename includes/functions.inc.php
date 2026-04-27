@@ -123,37 +123,39 @@ function lire_statistiques(string $fichier): array
  * @param string $departement Code du département (ex: "95", "2A").
  * @return array Tableau trié des noms de communes.
  */
+/**
+ * @brief Récupère la liste des villes d'un département depuis l'API carburants.
+ *
+ * @param string $departement Code du département.
+ * @return array Liste triée des villes.
+ */
 function lire_villes_par_departement(string $departement): array
 {
-	$villes = [];
+	$url = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?"
+		. "where=code_departement%3D%22" . rawurlencode($departement) . "%22"
+		. "&select=ville"
+		. "&limit=100"
+		. "&timezone=Europe%2FParis";
 
-	$handle = fopen('./data/clean_postcodes.csv', 'r');
-	if ($handle === false) {
-		return $villes;
+	$json = file_get_contents($url);
+	$data = json_decode($json, true);
+
+	if ($data === null || !isset($data['results'])) {
+		return [];
 	}
 
-	// On ignore la première ligne (en-tête)
-	fgetcsv($handle, 1000, ',', '"', '\\');
-	
-	while (($ligne = fgetcsv($handle, 1000, ',', '"', '\\')) !== false) {
-		// $ligne[0] = code_commune_insee
-		// $ligne[1] = nom_de_la_commune
-		// $ligne[2] = code_postal
-
-		$code_postal = trim($ligne[2]);
-
-		// On compare les 2 premiers chiffres du code postal avec le département
-		if (substr($code_postal, 0, 2) === $departement) {
-			$nom = ucwords(strtolower(trim($ligne[1])));
-			if (!empty($nom)) {
-				$villes[] = $nom;
-			}
+	$villes = [];
+	foreach ($data['results'] as $station) {
+		if (!empty($station['ville'])) {
+			$villes[] = $station['ville'];
 		}
 	}
 
-	fclose($handle);
+	// Supprimer les doublons et trier
+	$villes = array_unique($villes);
 	sort($villes);
-	return $villes;
+
+	return array_values($villes);
 }
 
 /**
@@ -175,10 +177,10 @@ function enregistrer_consultation(string $departement, string $ville): bool
 	// On construit la ligne CSV avec les 4 colonnes entre guillemets
 	// pour gérer les noms de villes avec des virgules (ex: "Bourg-en-Bresse")
 	$ligne_csv = '"' . $horodatage . '"'
-			. ',' . $departement
-			. ',"' . addslashes($ville) . '"'
-			. ',' . $ip
-			. PHP_EOL;
+		. ',' . $departement
+		. ',"' . addslashes($ville) . '"'
+		. ',' . $ip
+		. PHP_EOL;
 
 	// file_put_contents avec FILE_APPEND : ajoute à la fin sans écraser
 	$resultat = file_put_contents(
