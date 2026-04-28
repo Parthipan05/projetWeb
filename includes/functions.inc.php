@@ -192,3 +192,51 @@ function enregistrer_consultation(string $departement, string $ville): bool
 	// file_put_contents retourne false si l'écriture a échoué
 	return ($resultat !== false);
 }
+
+/**
+ * @brief Calcule la distance en kilomètres entre deux points GPS
+ *        en utilisant la formule de Haversine.
+ *
+ * @param float $lat1 Latitude du point 1 (position utilisateur).
+ * @param float $lon1 Longitude du point 1 (position utilisateur).
+ * @param float $lat2 Latitude du point 2 (position de la station).
+ * @param float $lon2 Longitude du point 2 (position de la station).
+ * @return float Distance en kilomètres (arrondie à 2 décimales).
+ */
+function calculer_distance(float $lat1, float $lon1, float $lat2, float $lon2): float
+{
+    // Rayon moyen de la Terre en kilomètres
+    $rayon_terre = 6371.0;
+
+    // Conversion des degrés en radians (obligatoire pour sin/cos en PHP)
+    $lat1_rad = deg2rad($lat1);
+    $lat2_rad = deg2rad($lat2);
+    $delta_lat = deg2rad($lat2 - $lat1);
+    $delta_lon = deg2rad($lon2 - $lon1);
+
+    // Formule de Haversine
+    $a = sin($delta_lat / 2) * sin($delta_lat / 2)
+       + cos($lat1_rad) * cos($lat2_rad)
+       * sin($delta_lon / 2) * sin($delta_lon / 2);
+
+    $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+    // Distance finale en km
+    $distance = $rayon_terre * $c;
+
+    return round($distance, 2);
+}
+
+/**
+ * @brief Incrémente et retourne le compteur de hits du site.
+ *
+ * @param string $fichier Chemin vers le fichier texte du compteur.
+ * @return int Nombre total de visites après incrémentation.
+ */
+function incrementer_hits(string $fichier): int
+{
+    $hits = file_exists($fichier) ? (int)file_get_contents($fichier) : 0;
+    $hits++;
+    file_put_contents($fichier, $hits);
+    return $hits;
+}

@@ -17,9 +17,7 @@ require_once("./includes/util.inc.php");
 define('COOKIE_PATH', '/stationfinder/');
 define('COOKIE_DUREE', time() + (30 * 24 * 3600)); // 30 jours
 
-// ============================================================
 // GESTION DU COOKIE MODE JOUR/NUIT
-// ============================================================
 
 // 1. Si un nouveau style est demandé via l'URL → on met à jour le cookie
 if (isset($_GET['style']) && !empty($_GET['style'])) {
@@ -57,15 +55,17 @@ if (isset($_GET['style']) && !empty($_GET['style'])) {
 	$css = 'style.css';
 }
 
-// ============================================================
 // GESTION DE LA LANGUE
-// ============================================================
 if (isset($_GET['lang']) && !empty($_GET['lang'])) {
 	$lang = $_GET['lang'];
 } else {
 	$lang = 'fr';
 }
+
+// COMPTEUR DE HITS
+$hits = incrementer_hits('./data/hits.txt');
 ?>
+
 <!DOCTYPE html>
 <html lang="<?= $lang ?>">
 

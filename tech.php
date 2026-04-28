@@ -68,7 +68,7 @@ require_once("./includes/header.inc.php");
         $pays   = (string)$xml->country_name;
 
         // Affichage propre pour le prof
-        echo "<h3>Résulat </h3>";
+        echo "<h3>Résulat</h3>";
         echo "<ul>";
         echo "<li><strong>Ville :</strong> " . ($ville ?: "Inconnu") . "</li>";
         echo "<li><strong>Région :</strong> " . ($region ?: "Inconnu") . "</li>";

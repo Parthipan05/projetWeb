@@ -7,6 +7,7 @@
         <a href="sitemap.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Plan du site</a>
         | <a href="tech.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Page Tech</a>
     </p>
+	<p>Visites totales : <strong><?= $hits ?></strong></p>
     <p>
         © 2026 — PIRABAKARAN Parthipan et HANANE Sanaa — Développement Web (CY Cergy Paris Université).
     </p>
