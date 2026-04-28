@@ -79,11 +79,10 @@ $hits = incrementer_hits('./data/hits.txt');
 	<link rel="icon" type="image/png" href="images/favicon.png" />
 </head>
 
-<body class="<?= ($styleUrl === 'alternatif') ? 'mode-jour' : '' ?>">
-
+<body class="<?= ($styleUrl === 'alternatif') ? 'mode-nuit' : '' ?>">
 	<header class="site-header">
 		<a href="index.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>" class="logo">
-			Station<span>Finder</span> ⛽
+			<img src="images/logo.png" alt="StationFinder - Prix des carburants en temps réel" />
 		</a>
 
 		<nav class="menu-principal">
