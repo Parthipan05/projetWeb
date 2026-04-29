@@ -23,40 +23,7 @@ $max         = !empty($stats) ? max($stats) : 1;
 require_once("./includes/header.inc.php");
 ?>
 
-<style>
-	.histogramme {
-		margin-top: 20px;
-	}
-
-	.barre-container {
-		display: flex;
-		align-items: center;
-		gap: 15px;
-		margin-bottom: 10px;
-	}
-
-	.barre-label {
-		min-width: 80px;
-		font-size: 0.9em;
-		color: #a0a0b0;
-		text-align: right;
-	}
-
-	.barre {
-		background-color: #e94560;
-		border-radius: 4px;
-		padding: 6px 10px;
-		min-width: 40px;
-	}
-
-	.barre-valeur {
-		color: #fff;
-		font-size: 0.85em;
-		white-space: nowrap;
-	}
-</style>
-
-<h1>📊 Statistiques</h1>
+<h1>Statistiques</h1>
 
 <section>
 	<h2>Consultations totales</h2>

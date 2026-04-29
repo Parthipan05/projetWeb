@@ -72,17 +72,9 @@ $hits = incrementer_hits('./data/hits.txt');
 
 		<nav class="menu-principal">
 			<ul>
-				<li><a href="index.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">
-						<?= ($lang === 'fr') ? 'Accueil' : 'Home' ?>
-					</a></li>
-				<li><a href="tech.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">
-						Tech
-					</a></li>
+
 				<li><a href="stats.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">
 						<?= ($lang === 'fr') ? 'Statistiques' : 'Statistics' ?>
-					</a></li>
-				<li><a href="sitemap.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">
-						<?= ($lang === 'fr') ? 'Plan du site' : 'Sitemap' ?>
 					</a></li>
 			</ul>
 		</nav>
