@@ -42,7 +42,6 @@ body {
     flex-direction: column;
 }
 
-
 /* --- Header --- */
 .site-header {
     background-color: #ffffff;
@@ -322,41 +321,6 @@ footer a:hover {
 footer p {
     color: rgba(255,255,255,0.8);
     margin-bottom: 5px;
-}
-
-/* --- Mode nuit --- */
-body.mode-nuit {
-    --couleur-fond: #0f0f1a;
-    --couleur-fond-secondaire: #1a1a2e;
-    --couleur-carte: #16213e;
-    --couleur-primaire: #5db85d;
-    --couleur-accent: #5db85d;
-    --couleur-secondaire: #0f3460;
-    --couleur-texte: #eaeaea;
-    --couleur-texte-discret: #a0a0b0;
-    --couleur-bordure: #2a2a4a;
-    --couleur-lien: #5db85d;
-}
-
-body.mode-nuit .site-header {
-    background-color: #1a1a2e;
-    border-bottom: 3px solid #5db85d;
-}
-
-body.mode-nuit .menu-principal ul li a {
-    color: #eaeaea;
-}
-
-body.mode-nuit .barre-options {
-    background-color: #0f3460;
-}
-
-body.mode-nuit .barre-options a {
-    color: #eaeaea;
-}
-
-body.mode-nuit footer {
-    background-color: #1a1a2e;
 }
 
 /* --- Histogramme stats --- */

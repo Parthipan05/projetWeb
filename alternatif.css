@@ -1,0 +1,84 @@
+/* ============================================================
+   StationFinder - Feuille de style alternative (mode nuit)
+   Auteurs : PIRABAKARAN Parthipan & HANANE Sanaa
+   Date : 2026
+   ============================================================ */
+
+/* On réutilise tout style.css via les variables CSS */
+@import url('style.css');
+
+/* Surcharge des variables pour le mode nuit */
+:root {
+    --couleur-fond: #0f0f1a !important;
+    --couleur-fond-secondaire: #1a1a2e !important;
+    --couleur-carte: #16213e !important;
+    --couleur-primaire: #5db85d !important;
+    --couleur-accent: #5db85d !important;
+    --couleur-secondaire: #0f3460 !important;
+    --couleur-texte: #eaeaea !important;
+    --couleur-texte-discret: #a0a0b0 !important;
+    --couleur-bordure: #2a2a4a !important;
+    --couleur-lien: #5db85d !important;
+}
+
+body {
+    background-color: #0f0f1a !important;
+    color: #eaeaea !important;
+}
+
+.site-header {
+    background-color: #1a1a2e !important;
+    border-bottom: 3px solid #5db85d !important;
+}
+
+.menu-principal ul li a {
+    color: #eaeaea !important;
+}
+
+.barre-options {
+    background-color: #0f3460 !important;
+}
+
+.barre-options a {
+    color: #eaeaea !important;
+}
+
+section {
+    background-color: #16213e !important;
+    border-color: #2a2a4a !important;
+}
+
+h1, h2 {
+    color: #5db85d !important;
+}
+
+p, li, td, label {
+    color: #eaeaea !important;
+}
+
+input, select, textarea {
+    background-color: #1a1a2e !important;
+    border: 1px solid #2a2a4a !important;
+    color: #eaeaea !important;
+}
+
+input:disabled, select:disabled {
+    background-color: #0f0f1a !important;
+    color: #a0a0b0 !important;
+}
+
+tr:nth-child(even) {
+    background-color: #1a1a2e !important;
+}
+
+tr:hover {
+    background-color: #0f3460 !important;
+}
+
+footer {
+    background-color: #1a1a2e !important;
+}
+
+.back-to-top {
+    background-color: #5db85d !important;
+}

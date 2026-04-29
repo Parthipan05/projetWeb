@@ -5,6 +5,7 @@
 
 <footer>
     <p class="footer-navig"><strong>Votre navigateur :</strong> <?php echo get_navigateur(); ?></p>
+    <p><strong>Visites sur le site :</strong> <?= $hits ?></p>
     <p>
         <a href="sitemap.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Plan du site</a>
         | <a href="tech.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Page Tech</a>
