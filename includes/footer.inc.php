@@ -9,6 +9,10 @@
     <p>
         <a href="sitemap.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Plan du site</a>
         | <a href="tech.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Page Tech</a>
+		| <a href="apropos.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">À propos</a>
+		| <a href="aide.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Aide</a>
+		| <a href="sources.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Sources</a>
+		| <a href="confidentialite.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Confidentialité</a>
     </p>
     <p>
         © 2026 — PIRABAKARAN Parthipan et HANANE Sanaa — Développement Web (CY Cergy Paris Université).

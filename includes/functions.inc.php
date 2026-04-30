@@ -240,3 +240,40 @@ function incrementer_hits(string $fichier): int
     file_put_contents($fichier, $hits);
     return $hits;
 }
+
+/**
+ * @brief Lit le fichier CSV et retourne les statistiques par ville.
+ *
+ * @param string $fichier Chemin vers le fichier CSV.
+ * @return array Tableau associatif [ville => nombre_consultations]
+ */
+function lire_statistiques_villes(string $fichier): array
+{
+    $stats = [];
+
+    if (!file_exists($fichier)) {
+        return $stats;
+    }
+
+    $handle = fopen($fichier, 'r');
+    if ($handle === false) {
+        return $stats;
+    }
+
+    while (($ligne = fgetcsv($handle, 1000, ',', '"', '\\')) !== false) {
+        // colonne 2 = ville
+        if (isset($ligne[2]) && !empty(trim($ligne[2]))) {
+            $ville = trim($ligne[2]);
+            if (isset($stats[$ville])) {
+                $stats[$ville]++;
+            } else {
+                $stats[$ville] = 1;
+            }
+        }
+    }
+
+    fclose($handle);
+    arsort($stats);
+
+    return $stats;
+}
