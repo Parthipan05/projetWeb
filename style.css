@@ -235,7 +235,7 @@ label {
     display: block;
 }
 
-input, select, textarea {
+input:not([type="checkbox"]), select, textarea {
     background-color: #f7fafd;
     border: 1px solid var(--couleur-bordure);
     border-radius: 6px;
@@ -244,6 +244,18 @@ input, select, textarea {
     font-size: 1em;
     width: 100%;
     transition: border-color 0.2s;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    padding: 0;
+}
+
+label:has(input[type="checkbox"]) {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
 }
 
 input:focus, select:focus, textarea:focus {
