@@ -138,17 +138,32 @@ if ($derniere !== null) {
 
 	$json_brut = file_get_contents($url_api);
 	$donnees   = json_decode($json_brut, true);
-
 	if ($donnees === null || !isset($donnees['results'])) {
 		echo "<p>Impossible de récupérer les données. Veuillez réessayer.</p>";
+		$stations = [];
 	} elseif (count($donnees['results']) === 0) {
-		echo "<p>" . $tr['aucune_station'] . "</p>";
+		if (!empty($ville) && !empty($departement)) {
+			// Pas de station dans cette ville → on affiche tout le département
+			$filtre = "code_departement%3D%22" . rawurlencode($departement) . "%22";
+			$url_api = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?"
+				. "where=" . $filtre . "&limit=50&timezone=Europe%2FParis";
+			$json_brut = file_get_contents($url_api);
+			$donnees   = json_decode($json_brut, true);
+			$stations  = $donnees['results'] ?? [];
+			echo "<p class='texte-discret'>Aucune station à <strong>" . $ville
+				. "</strong>. Affichage du département <strong>" . $departement . "</strong>.</p>";
+		} else {
+			$stations = [];
+			echo "<p>" . $tr['aucune_station'] . "</p>";
+		}
 	} else {
 		$stations = $donnees['results'];
+	}
 
+	// --- Le traitement des stations se fait ICI pour tous les cas ---
+	if (!empty($stations)) {
 		$carburants_choisis = $_GET['carburants'] ?? ['sp95', 'sp98', 'gazole', 'e10', 'gplc'];
 		$tri = $_GET['tri'] ?? '';
-
 		// --- Mode géolocalisation ---
 		if ($mode_geoloc) {
 			foreach ($stations as &$station) {
