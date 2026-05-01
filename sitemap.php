@@ -21,18 +21,14 @@ require_once("./includes/header.inc.php");
 <section>
 	<h2>Pages</h2>
 	<ul>
-		<li>
-			<a href="index.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Accueil</a>
-		</li>
-		<li>
-			<a href="stats.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Statistiques</a>
-		</li>
-		<li>
-			<a href="tech.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Page technique</a>
-		</li>
-		<li>
-			<a href="sitemap.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Plan du site</a>
-		</li>
+		<li><a href="index.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Accueil</a></li>
+		<li><a href="stats.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Statistiques</a></li>
+		<li><a href="apropos.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">À propos</a></li>
+		<li><a href="aide.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Aide</a></li>
+		<li><a href="sources.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Sources</a></li>
+		<li><a href="confidentialite.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Confidentialité</a></li>
+		<li><a href="tech.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Page technique</a></li>
+		<li><a href="sitemap.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>">Plan du site</a></li>
 	</ul>
 </section>
 
