@@ -98,25 +98,26 @@ if (empty($departement) && empty($ville) && !$mode_geoloc) {
 		<?= $tr['departement'] ?> <?= htmlspecialchars($departement) ?>
 	<?php } ?>
 </h1>
-
 <?php
 // --- Lecture et affichage du cookie dernière consultation ---
-$cookie_data = explode('|', $_COOKIE['derniere_consultation']);
-if (count($cookie_data) === 3) {
-	$dep_precedent  = htmlspecialchars($cookie_data[0]);
-	$ville_precedente = htmlspecialchars($cookie_data[1]);
-	$date_precedent = htmlspecialchars($cookie_data[2]);
-	echo "<p class='texte-discret'>"
-		. $tr['derniere_consul']
-		. " <strong>" . $dep_precedent . "</strong>"
-		. (!empty($ville_precedente) ? " — <strong>" . $ville_precedente . "</strong>" : "")
-		. " le " . $date_precedent
-		. "</p>";
-} else {
-	setcookie('derniere_consultation', '', time() - 3600, '/stationfinder/');
+if (isset($_COOKIE['derniere_consultation']) && !empty($_COOKIE['derniere_consultation'])) {
+	$cookie_data = explode('|', $_COOKIE['derniere_consultation']);
+	if (count($cookie_data) === 3) {
+		$dep_precedent    = htmlspecialchars($cookie_data[0]);
+		$ville_precedente = htmlspecialchars($cookie_data[1]);
+		$date_precedent   = htmlspecialchars($cookie_data[2]);
+		echo "<p class='texte-discret'>"
+			. $tr['derniere_consul']
+			. " <strong>" . $dep_precedent . "</strong>"
+			. (!empty($ville_precedente) ? " — <strong>" . $ville_precedente . "</strong>" : "")
+			. " le " . $date_precedent
+			. "</p>";
+	} else {
+		// Valeur erronée → on supprime le cookie
+		setcookie('derniere_consultation', '', time() - 3600, '/stationfinder/');
+	}
 }
 ?>
-
 <section>
 	<?php
 	// --- Appel de l'API gouvernementale (format JSON) ---
