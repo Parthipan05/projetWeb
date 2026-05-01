@@ -98,24 +98,21 @@ if (empty($departement) && empty($ville) && !$mode_geoloc) {
 		<?= $tr['departement'] ?> <?= htmlspecialchars($departement) ?>
 	<?php } ?>
 </h1>
+
 <?php
 // --- Lecture et affichage du cookie dernière consultation ---
-if (isset($_COOKIE['derniere_consultation']) && !empty($_COOKIE['derniere_consultation'])) {
-	$cookie_data = explode('|', $_COOKIE['derniere_consultation']);
-	if (count($cookie_data) === 3) {
-		$dep_precedent    = htmlspecialchars($cookie_data[0]);
-		$ville_precedente = htmlspecialchars($cookie_data[1]);
-		$date_precedent   = htmlspecialchars($cookie_data[2]);
-		echo "<p class='texte-discret'>"
-			. $tr['derniere_consul']
-			. " <strong>" . $dep_precedent . "</strong>"
-			. (!empty($ville_precedente) ? " — <strong>" . $ville_precedente . "</strong>" : "")
-			. " le " . $date_precedent
-			. "</p>";
-	} else {
-		// Valeur erronée → on supprime le cookie
-		setcookie('derniere_consultation', '', time() - 3600, '/stationfinder/');
-	}
+$derniere = get_derniere_consultation();
+if ($derniere !== null) {
+	echo "<p class='texte-discret'>"
+		. $tr['derniere_consul']
+		. " <a href='resultats.php?departement=" . urlencode($derniere['departement'])
+		. "&ville=" . urlencode($derniere['ville'])
+		. "&style=" . $styleUrl
+		. "&lang=" . $lang . "'>"
+		. "<strong>" . $derniere['departement'] . "</strong>"
+		. (!empty($derniere['ville']) ? " — <strong>" . $derniere['ville'] . "</strong>" : "")
+		. "</a> le " . $derniere['date']
+		. "</p>";
 }
 ?>
 <section>

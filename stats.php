@@ -19,11 +19,11 @@ require_once("./includes/functions.inc.php");
 
 // --- Lecture des statistiques depuis le CSV ---
 $fichier_csv  = './data/consultations.csv';
-$stats        = lire_statistiques($fichier_csv);
-$total        = array_sum($stats);
+$stats        = array_slice(lire_statistiques($fichier_csv), 0, 5);
+$total        = array_sum(lire_statistiques($fichier_csv));
 $max          = !empty($stats) ? max($stats) : 1;
 
-$stats_villes = lire_statistiques_villes($fichier_csv);
+$stats_villes = array_slice(lire_statistiques_villes($fichier_csv), 0, 5);
 $max_villes   = !empty($stats_villes) ? max($stats_villes) : 1;
 
 require_once("./includes/header.inc.php");
@@ -84,10 +84,9 @@ require_once("./includes/traductions.inc.php");
 
 	<?php
 	$mois   = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc', 'Jan', 'Fév', 'Mar', 'Avr'];
-	$sp95   = [1.76, 1.78, 1.80, 1.79, 1.77, 1.75, 1.73, 1.71, 1.68, 1.66, 1.65, 1.64, 1.63, 1.62, 1.61, 1.60];
-	$gazole = [1.72, 1.74, 1.76, 1.75, 1.73, 1.70, 1.68, 1.65, 1.62, 1.59, 1.57, 1.55, 1.54, 1.53, 1.52, 1.51];
-	$sp98   = [1.88, 1.90, 1.92, 1.91, 1.89, 1.87, 1.85, 1.83, 1.80, 1.78, 1.77, 1.76, 1.75, 1.74, 1.73, 1.72];
-
+	$sp95   = [1.82, 1.79, 1.76, 1.74, 1.76, 1.78, 1.75, 1.72, 1.68, 1.65, 1.63, 1.61, 1.60, 1.62, 1.64, 1.63];
+	$gazole = [1.75, 1.72, 1.69, 1.67, 1.70, 1.72, 1.68, 1.64, 1.60, 1.57, 1.55, 1.53, 1.52, 1.54, 1.55, 1.54];
+	$sp98   = [1.94, 1.91, 1.88, 1.86, 1.88, 1.90, 1.87, 1.84, 1.80, 1.77, 1.75, 1.73, 1.72, 1.74, 1.76, 1.75];
 	$largeur_svg = 800;
 	$hauteur_svg = 300;
 	$marge_haut  = 20;
@@ -96,8 +95,8 @@ require_once("./includes/traductions.inc.php");
 	$marge_d     = 20;
 	$zone_l      = $largeur_svg - $marge_g - $marge_d;
 	$zone_h      = $hauteur_svg - $marge_haut - $marge_bas;
-	$prix_min    = 1.45;
-	$prix_max    = 1.95;
+	$prix_min    = 1.40;
+	$prix_max    = 2.00;
 	$nb_points   = count($mois);
 
 	$to_y = function (float $prix) use ($prix_min, $prix_max, $zone_h, $marge_haut): float {
@@ -119,7 +118,7 @@ require_once("./includes/traductions.inc.php");
 
 	<div style="overflow-x: auto;">
 		<svg width="<?= $largeur_svg ?>" height="<?= $hauteur_svg ?>" style="display:block; margin:0 auto;">
-			<?php for ($p = 1.50; $p <= 1.90; $p += 0.10) { ?>
+			<?php for ($p = 1.40; $p <= 2.00; $p += 0.10) { ?>
 				<?php $y = $to_y($p); ?>
 				<line x1="<?= $marge_g ?>" y1="<?= $y ?>" x2="<?= $largeur_svg - $marge_d ?>" y2="<?= $y ?>"
 					stroke="#d0dce8" stroke-width="1" stroke-dasharray="4,4" />

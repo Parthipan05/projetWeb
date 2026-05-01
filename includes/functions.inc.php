@@ -205,26 +205,26 @@ function enregistrer_consultation(string $departement, string $ville): bool
  */
 function calculer_distance(float $lat1, float $lon1, float $lat2, float $lon2): float
 {
-    // Rayon moyen de la Terre en kilomètres
-    $rayon_terre = 6371.0;
+	// Rayon moyen de la Terre en kilomètres
+	$rayon_terre = 6371.0;
 
-    // Conversion des degrés en radians (obligatoire pour sin/cos en PHP)
-    $lat1_rad = deg2rad($lat1);
-    $lat2_rad = deg2rad($lat2);
-    $delta_lat = deg2rad($lat2 - $lat1);
-    $delta_lon = deg2rad($lon2 - $lon1);
+	// Conversion des degrés en radians (obligatoire pour sin/cos en PHP)
+	$lat1_rad = deg2rad($lat1);
+	$lat2_rad = deg2rad($lat2);
+	$delta_lat = deg2rad($lat2 - $lat1);
+	$delta_lon = deg2rad($lon2 - $lon1);
 
-    // Formule de Haversine
-    $a = sin($delta_lat / 2) * sin($delta_lat / 2)
-       + cos($lat1_rad) * cos($lat2_rad)
-       * sin($delta_lon / 2) * sin($delta_lon / 2);
+	// Formule de Haversine
+	$a = sin($delta_lat / 2) * sin($delta_lat / 2)
+		+ cos($lat1_rad) * cos($lat2_rad)
+		* sin($delta_lon / 2) * sin($delta_lon / 2);
 
-    $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+	$c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-    // Distance finale en km
-    $distance = $rayon_terre * $c;
+	// Distance finale en km
+	$distance = $rayon_terre * $c;
 
-    return round($distance, 2);
+	return round($distance, 2);
 }
 
 /**
@@ -235,10 +235,10 @@ function calculer_distance(float $lat1, float $lon1, float $lat2, float $lon2): 
  */
 function incrementer_hits(string $fichier): int
 {
-    $hits = file_exists($fichier) ? (int)file_get_contents($fichier) : 0;
-    $hits++;
-    file_put_contents($fichier, $hits);
-    return $hits;
+	$hits = file_exists($fichier) ? (int)file_get_contents($fichier) : 0;
+	$hits++;
+	file_put_contents($fichier, $hits);
+	return $hits;
 }
 
 /**
@@ -249,31 +249,51 @@ function incrementer_hits(string $fichier): int
  */
 function lire_statistiques_villes(string $fichier): array
 {
-    $stats = [];
+	$stats = [];
 
-    if (!file_exists($fichier)) {
-        return $stats;
-    }
+	if (!file_exists($fichier)) {
+		return $stats;
+	}
 
-    $handle = fopen($fichier, 'r');
-    if ($handle === false) {
-        return $stats;
-    }
+	$handle = fopen($fichier, 'r');
+	if ($handle === false) {
+		return $stats;
+	}
 
-    while (($ligne = fgetcsv($handle, 1000, ',', '"', '\\')) !== false) {
-        // colonne 2 = ville
-        if (isset($ligne[2]) && !empty(trim($ligne[2]))) {
-            $ville = trim($ligne[2]);
-            if (isset($stats[$ville])) {
-                $stats[$ville]++;
-            } else {
-                $stats[$ville] = 1;
-            }
-        }
-    }
+	while (($ligne = fgetcsv($handle, 1000, ',', '"', '\\')) !== false) {
+		// colonne 2 = ville
+		if (isset($ligne[2]) && !empty(trim($ligne[2]))) {
+			$ville = trim($ligne[2]);
+			if (isset($stats[$ville])) {
+				$stats[$ville]++;
+			} else {
+				$stats[$ville] = 1;
+			}
+		}
+	}
 
-    fclose($handle);
-    arsort($stats);
+	fclose($handle);
+	arsort($stats);
 
-    return $stats;
+	return $stats;
+}
+/**
+ * @brief Récupère les données de la dernière consultation depuis le cookie.
+ * Lit le cookie 'derniere_consultation' et retourne ses composantes.
+ *
+ * @return array|null Tableau [departement, ville, date] ou null si absent/invalide.
+ */
+function get_derniere_consultation(): ?array
+{
+	if (isset($_COOKIE['derniere_consultation']) && !empty($_COOKIE['derniere_consultation'])) {
+		$data = explode('|', $_COOKIE['derniere_consultation']);
+		if (count($data) === 3) {
+			return [
+				'departement' => htmlspecialchars($data[0]),
+				'ville'       => htmlspecialchars($data[1]),
+				'date'        => htmlspecialchars($data[2])
+			];
+		}
+	}
+	return null;
 }

@@ -67,8 +67,8 @@ require_once("./includes/traductions.inc.php");
     <h2><?= $tr['ip_titre'] ?></h2>
 
     <?php
-    // IP de test (IP de la fac)
-    $ip_visiteur = '193.54.115.18';
+    // IP 
+    $ip_visiteur = $_SERVER['REMOTE_ADDR'] ?? '193.54.115.18';
 
     // Clé API ip2location
     $cle_api = "DAFEE48938FFF47E6537D03212A58A0D";

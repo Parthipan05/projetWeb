@@ -382,7 +382,7 @@ footer p {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background-color: var(--couleur-primaire);
+    background-color: var(--couleur-accent);
     color: white;
     border: none;
     border-radius: 50%;

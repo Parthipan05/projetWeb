@@ -78,6 +78,23 @@ if (!empty($departement_selectionne)) {
 ?>
 
 <h1><?= $tr['bienvenue'] ?></h1>
+<?php
+$derniere = get_derniere_consultation();
+if ($derniere !== null) {
+	echo "<section>
+        <p>" . $tr['derniere_consul'] . " 
+        <a href='resultats.php?departement=" . urlencode($derniere['departement'])
+		. "&ville=" . urlencode($derniere['ville'])
+		. "&style=" . $styleUrl
+		. "&lang=" . $lang . "' class='btn'>
+            " . $derniere['departement']
+		. (!empty($derniere['ville']) ? " — " . $derniere['ville'] : "") . "
+        </a>
+        <span class='texte-discret'>le " . $derniere['date'] . "</span>
+        </p>
+    </section>";
+}
+?>
 
 <section>
 	<h2><?= $tr['slogan'] ?></h2>

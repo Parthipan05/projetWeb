@@ -61,7 +61,7 @@ $hits = incrementer_hits('./data/hits.txt');
 	<meta name="keywords" content="carburant, essence, diesel, station service, prix, France" />
 	<title>StationFinder — <?= isset($titre) ? htmlspecialchars($titre) : 'Accueil' ?></title>
 	<link rel="stylesheet" href="<?= $css ?>" />
-	<link rel="icon" type="image/png" href="images/favicon.png" />
+	<link rel="icon" type="image/png" href="images/favicon.ico" />
 </head>
 
 <body>
