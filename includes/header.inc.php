@@ -81,17 +81,17 @@ $hits = incrementer_hits('./data/hits.txt');
 	</header>
 
 	<div class="barre-options">
-		<?php if ($styleUrl === 'standard'): ?>
-			<a href="?style=alternatif&amp;lang=<?= $lang ?>">🌙 Mode Nuit</a>
-		<?php else: ?>
-			<a href="?style=standard&amp;lang=<?= $lang ?>">☀️ Mode Jour</a>
-		<?php endif; ?>
+		<?php if ($styleUrl === 'standard') { ?>
+			<a href="?style=alternatif&amp;lang=<?= $lang ?>">Mode Nuit</a>
+		<?php } else { ?>
+			<a href="?style=standard&amp;lang=<?= $lang ?>">Mode Jour</a>
+		<?php } ?>
 		&nbsp;|&nbsp;
-		<?php if ($lang === 'fr'): ?>
-			<a href="?style=<?= $styleUrl ?>&amp;lang=en">🇬🇧 English</a>
-		<?php else: ?>
-			<a href="?style=<?= $styleUrl ?>&amp;lang=fr">🇫🇷 Français</a>
-		<?php endif; ?>
+		<?php if ($lang === 'fr') { ?>
+			<a href="?style=<?= $styleUrl ?>&amp;lang=en">English</a>
+		<?php } else { ?>
+			<a href="?style=<?= $styleUrl ?>&amp;lang=fr">Français</a>
+		<?php } ?>
 	</div>
 
 	<div class="container">
