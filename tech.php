@@ -11,50 +11,51 @@
 
 declare(strict_types=1);
 
-$titre = "Page Tech";
+$titre       = "Page Tech";
 $description = "Page technique - Film Ghibli et géolocalisation IP";
+
 require_once("./includes/functions.inc.php");
 require_once("./includes/header.inc.php");
+require_once("./includes/traductions.inc.php");
 ?>
 
-<h1>Page technique</h1>
+<h1><?= $tr['tech_titre'] ?></h1>
 
 <section>
-    <h2>Film Ghibli aléatoire</h2>
+    <h2><?= $tr['ghibli_titre'] ?></h2>
 
     <?php
-    // 1. On récupère les données brutes (flux JSON) depuis l'API Ghibli
+    // 1. Récupération du flux JSON depuis l'API Ghibli
     $json = file_get_contents("https://ghibliapi.vercel.app/films");
 
     // 2. Vérification que l'API répond correctement
     if ($json === false) {
-        echo "<p>Impossible de contacter l'API Ghibli pour le moment.</p>";
+        echo "<p>" . $tr['ghibli_erreur'] . "</p>";
     } else {
-        // 3. On traduit le JSON en tableau PHP associatif
+        // 3. Décodage du JSON en tableau PHP associatif
         $films = json_decode($json, true);
 
-        // 4. array_rand() sélectionne un index au hasard
+        // 4. Sélection aléatoire d'un film
         $index_aleatoire = array_rand($films);
 
-        // 5. On isole le film sélectionné
+        // 5. Isolation du film sélectionné
         $film = $films[$index_aleatoire];
     ?>
-
         <h3><?= htmlspecialchars($film['title']) ?></h3>
         <p lang="ja"><?= htmlspecialchars($film['original_title']) ?></p>
-        <p><strong>Année de sortie :</strong> <?= htmlspecialchars($film['release_date']) ?></p>
-        <p><strong>Description :</strong> <?= htmlspecialchars($film['description']) ?></p>
+        <p><strong><?= $tr['annee_sortie'] ?> :</strong> <?= htmlspecialchars($film['release_date']) ?></p>
+        <p><strong><?= $tr['description'] ?> :</strong> <?= htmlspecialchars($film['description']) ?></p>
 
         <figure>
             <img src="<?= htmlspecialchars($film['image']) ?>"
-                alt="Affiche du film <?= htmlspecialchars($film['title']) ?>">
-            <figcaption>Affiche — <?= htmlspecialchars($film['title']) ?></figcaption>
+                alt="<?= $tr['affiche'] ?> — <?= htmlspecialchars($film['title']) ?>">
+            <figcaption><?= $tr['affiche'] ?> — <?= htmlspecialchars($film['title']) ?></figcaption>
         </figure>
 
         <figure>
             <img src="<?= htmlspecialchars($film['movie_banner']) ?>"
-                alt="Bannière du film <?= htmlspecialchars($film['title']) ?>">
-            <figcaption>Bannière — <?= htmlspecialchars($film['title']) ?></figcaption>
+                alt="<?= $tr['banniere'] ?> — <?= htmlspecialchars($film['title']) ?>">
+            <figcaption><?= $tr['banniere'] ?> — <?= htmlspecialchars($film['title']) ?></figcaption>
         </figure>
 
     <?php } ?>
@@ -63,7 +64,7 @@ require_once("./includes/header.inc.php");
 <hr>
 
 <section>
-    <h2>Localisation par IP</h2>
+    <h2><?= $tr['ip_titre'] ?></h2>
 
     <?php
     // IP de test (IP de la fac)
@@ -72,7 +73,7 @@ require_once("./includes/header.inc.php");
     // Clé API ip2location
     $cle_api = "DAFEE48938FFF47E6537D03212A58A0D";
 
-    // URL configurée en XML
+    // URL configurée en XML pour satisfaire l'exigence du sujet (format XML)
     $url = "https://api.ip2location.io/?key=" . $cle_api . "&ip=" . $ip_visiteur . "&format=xml";
 
     $contenu_api = @file_get_contents($url);
@@ -80,19 +81,19 @@ require_once("./includes/header.inc.php");
     if ($contenu_api !== false && str_contains($contenu_api, '<?xml')) {
         $xml = simplexml_load_string($contenu_api);
 
-        // Extraction des balises XML
+        // Extraction des balises XML de la réponse
         $ville  = (string)$xml->city_name;
         $region = (string)$xml->region_name;
         $pays   = (string)$xml->country_name;
 
-        echo "<h3>Résultat</h3>";
+        echo "<h3>" . $tr['ip_resultat'] . "</h3>";
         echo "<ul>";
-        echo "<li><strong>Ville :</strong> "   . htmlspecialchars($ville  ?: "Inconnu") . "</li>";
-        echo "<li><strong>Région :</strong> "  . htmlspecialchars($region ?: "Inconnu") . "</li>";
-        echo "<li><strong>Pays :</strong> "    . htmlspecialchars($pays   ?: "Inconnu") . "</li>";
+        echo "<li><strong>" . $tr['ip_ville']  . " :</strong> " . htmlspecialchars($ville  ?: $tr['ip_inconnu']) . "</li>";
+        echo "<li><strong>" . $tr['ip_region'] . " :</strong> " . htmlspecialchars($region ?: $tr['ip_inconnu']) . "</li>";
+        echo "<li><strong>" . $tr['ip_pays']   . " :</strong> " . htmlspecialchars($pays   ?: $tr['ip_inconnu']) . "</li>";
         echo "</ul>";
     } else {
-        echo "<p>Impossible de contacter l'API de géolocalisation.</p>";
+        echo "<p>" . $tr['ip_erreur'] . "</p>";
     }
     ?>
 </section>

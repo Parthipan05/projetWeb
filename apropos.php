@@ -9,41 +9,31 @@
 
 declare(strict_types=1);
 
-$titre = "À propos";
+$titre       = "À propos";
 $description = "À propos de StationFinder - Projet universitaire L2 Informatique";
 
 require_once("./includes/functions.inc.php");
 require_once("./includes/header.inc.php");
+require_once("./includes/traductions.inc.php");
 ?>
 
-<h1>À propos de StationFinder</h1>
+<h1><?= $tr['apropos_titre'] ?></h1>
 
 <section>
-    <h2>🚀 Le projet</h2>
-    <p>
-        <strong>StationFinder</strong> est un site web développé dans le cadre de l'UE
-        <strong>Développement Web</strong> de la licence L2 Informatique (semestre 4)
-        à <strong>CY Cergy Paris Université</strong>.
-    </p>
-    <p>
-        Face à la hausse des prix des carburants, nous avons conçu un outil permettant
-        aux automobilistes de trouver rapidement et facilement les stations-service
-        les moins chères près de chez eux, en temps réel.
-    </p>
-    <p>
-        Les données sont issues directement des sources officielles du gouvernement
-        français et sont mises à jour en continu.
-    </p>
+    <h2><?= $tr['apropos_projet'] ?></h2>
+    <p><?= $tr['apropos_texte1'] ?></p>
+    <p><?= $tr['apropos_texte2'] ?></p>
+    <p><?= $tr['apropos_texte3'] ?></p>
 </section>
 
 <section>
-    <h2>👥 L'équipe</h2>
+    <h2><?= $tr['apropos_equipe'] ?></h2>
     <table>
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Formation</th>
-                <th>Université</th>
+                <th><?= $tr['col_nom'] ?></th>
+                <th><?= $tr['col_formation'] ?></th>
+                <th><?= $tr['col_universite'] ?></th>
             </tr>
         </thead>
         <tbody>
@@ -62,42 +52,42 @@ require_once("./includes/header.inc.php");
 </section>
 
 <section>
-    <h2>🛠️ Technologies utilisées</h2>
+    <h2><?= $tr['apropos_tech'] ?></h2>
     <table>
         <thead>
             <tr>
-                <th>Technologie</th>
-                <th>Utilisation</th>
+                <th><?= $tr['col_techno'] ?></th>
+                <th><?= $tr['col_utilisation'] ?></th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><strong>HTML5</strong></td>
-                <td>Structure et sémantique des pages</td>
+                <td><?= $tr['tech_html'] ?></td>
             </tr>
             <tr>
                 <td><strong>CSS3</strong></td>
-                <td>Mise en forme, responsive design, mode jour/nuit</td>
+                <td><?= $tr['tech_css'] ?></td>
             </tr>
             <tr>
                 <td><strong>PHP 8</strong></td>
-                <td>Traitement côté serveur, appels API, gestion des cookies</td>
+                <td><?= $tr['tech_php'] ?></td>
             </tr>
             <tr>
                 <td><strong>API Gouvernementale</strong></td>
-                <td>Prix des carburants en temps réel (data.economie.gouv.fr)</td>
+                <td><?= $tr['tech_api_gouv'] ?></td>
             </tr>
             <tr>
                 <td><strong>ipinfo.io</strong></td>
-                <td>Géolocalisation approximative par adresse IP (JSON)</td>
+                <td><?= $tr['tech_ipinfo'] ?></td>
             </tr>
             <tr>
                 <td><strong>ip2location.io</strong></td>
-                <td>Géolocalisation par adresse IP (XML)</td>
+                <td><?= $tr['tech_ip2loc'] ?></td>
             </tr>
             <tr>
                 <td><strong>Ghibli API</strong></td>
-                <td>Démonstration de la maîtrise des API REST JSON</td>
+                <td><?= $tr['tech_ghibli'] ?></td>
             </tr>
         </tbody>
     </table>

@@ -81,16 +81,20 @@ $hits = incrementer_hits('./data/hits.txt');
 	</header>
 
 	<div class="barre-options">
+		<?php
+		// On garde tous les paramètres GET actuels sauf style/lang
+		$params = $_GET;
+		?>
 		<?php if ($styleUrl === 'standard') { ?>
-			<a href="?style=alternatif&amp;lang=<?= $lang ?>">Mode Nuit</a>
+			<a href="?<?= http_build_query(array_merge($params, ['style' => 'alternatif'])) ?>">Mode Nuit</a>
 		<?php } else { ?>
-			<a href="?style=standard&amp;lang=<?= $lang ?>">Mode Jour</a>
+			<a href="?<?= http_build_query(array_merge($params, ['style' => 'standard'])) ?>">Mode Jour</a>
 		<?php } ?>
 		&nbsp;|&nbsp;
 		<?php if ($lang === 'fr') { ?>
-			<a href="?style=<?= $styleUrl ?>&amp;lang=en">English</a>
+			<a href="?<?= http_build_query(array_merge($params, ['lang' => 'en'])) ?>">English</a>
 		<?php } else { ?>
-			<a href="?style=<?= $styleUrl ?>&amp;lang=fr">Français</a>
+			<a href="?<?= http_build_query(array_merge($params, ['lang' => 'fr'])) ?>">Français</a>
 		<?php } ?>
 	</div>
 
