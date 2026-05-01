@@ -118,17 +118,15 @@ if ($derniere !== null) {
 <section>
 	<?php
 	// --- Appel de l'API gouvernementale (format JSON) ---
+	// --- Appel de l'API gouvernementale (format JSON) ---
 	if ($mode_geoloc && empty($departement)) {
+		// Mode géolocalisation : filtre par distance
 		$filtre = "dist(geo_point_2d%2C%22" . $lat_utilisateur . "%2C" . $lon_utilisateur . "%22)%3C%3D20000";
 	} elseif (!empty($departement)) {
+		// On filtre par département uniquement pour avoir toutes les stations avec prix
 		$filtre = "code_departement%3D%22" . rawurlencode($departement) . "%22";
-		if (!empty($ville) && !$mode_geoloc) {
-			$ville_api = trim($ville);
-			$filtre .= "%20AND%20suggest(ville%2C%22" . rawurlencode($ville_api) . "%22)";
-		}
 	} else {
-		$ville_api = trim($ville);
-		$filtre = "ville%3D%22" . rawurlencode($ville_api) . "%22";
+		$filtre = "ville%3D%22" . rawurlencode(trim($ville)) . "%22";
 	}
 
 	$url_api = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?"
@@ -142,20 +140,8 @@ if ($derniere !== null) {
 		echo "<p>Impossible de récupérer les données. Veuillez réessayer.</p>";
 		$stations = [];
 	} elseif (count($donnees['results']) === 0) {
-		if (!empty($ville) && !empty($departement)) {
-			// Pas de station dans cette ville → on affiche tout le département
-			$filtre = "code_departement%3D%22" . rawurlencode($departement) . "%22";
-			$url_api = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?"
-				. "where=" . $filtre . "&limit=50&timezone=Europe%2FParis";
-			$json_brut = file_get_contents($url_api);
-			$donnees   = json_decode($json_brut, true);
-			$stations  = $donnees['results'] ?? [];
-			echo "<p class='texte-discret'>Aucune station à <strong>" . $ville
-				. "</strong>. Affichage du département <strong>" . $departement . "</strong>.</p>";
-		} else {
-			$stations = [];
-			echo "<p>" . $tr['aucune_station'] . "</p>";
-		}
+		$stations = [];
+		echo "<p>" . $tr['aucune_station'] . "</p>";
 	} else {
 		$stations = $donnees['results'];
 	}
@@ -209,21 +195,25 @@ if ($derniere !== null) {
 		}
 
 		// --- Filtre carburants ---
-		$stations = array_filter($stations, function ($s) use ($carburants_choisis) {
+		$stations_filtrees = array_filter($stations, function ($s) use ($carburants_choisis) {
 			foreach ($carburants_choisis as $c) {
 				if (!empty($s[$c . '_prix'])) return true;
 			}
 			return false;
 		});
-		$stations = array_values($stations);
+		$stations_filtrees = array_values($stations_filtrees);
 
-		if (!empty($ville)) {
-			echo "<p>" . count($stations) . " " . $tr['stations_trouvees'] . " à <strong>" . $ville . "</strong>.</p>";
-		} else {
-			echo "<p>" . count($stations) . " " . $tr['stations_trouvees'] . " — " . $tr['departement'] . " <strong>" . $departement . "</strong>.</p>";
+		// Si après filtre il ne reste rien, on garde toutes les stations
+		if (!empty($stations_filtrees)) {
+			$stations = $stations_filtrees;
 		}
 	?>
-
+		<?php
+		if (!empty($ville)) {
+			echo "<p class='texte-discret'>" . $tr['pas_station_ville'] . " <strong>" . $departement . "</strong>.</p>";
+		}
+		echo "<p><strong>" . count($stations) . "</strong> " . $tr['stations_trouvees'] . " — " . $tr['departement'] . " <strong>" . $departement . "</strong>.</p>";
+		?>
 		<form action="resultats.php#resultats" method="get">
 			<input type="hidden" name="departement" value="<?= htmlspecialchars($departement) ?>" />
 			<input type="hidden" name="ville" value="<?= htmlspecialchars($ville) ?>" />

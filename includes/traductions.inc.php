@@ -182,6 +182,7 @@ $t = [
 		'conf_tiers_texte'  => 'StationFinder utilise des services externes. Chacun dispose de sa propre politique de confidentialité.',
 		'conf_contact'      => 'Contact',
 		'conf_cont_texte'   => 'Pour toute question concernant la confidentialité, contactez les auteurs via CY Cergy Paris Université.',
+		'pas_station_ville' => 'Aucune station trouvée à cette ville. Voici les stations du département',
 
 
 	],
@@ -359,6 +360,8 @@ $t = [
 		'conf_tiers_texte'  => 'StationFinder uses external services. Each has its own privacy policy.',
 		'conf_contact'      => 'Contact',
 		'conf_cont_texte'   => 'For any privacy questions, contact the project authors via CY Cergy Paris University.',
+		'pas_station_ville' => 'No station found in this city. Here are the stations in department',
+
 	]
 ];
 
