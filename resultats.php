@@ -44,10 +44,11 @@ if (isset($_GET['rayon']) && !empty($_GET['rayon'])) {
 
 // --- Cookie dernière consultation (avant tout affichage HTML) ---
 if (isset($_GET['departement']) && !empty($_GET['departement'])) {
-	$dep_cookie = htmlspecialchars($_GET['departement']);
+	$dep_cookie   = htmlspecialchars($_GET['departement']);
+	$ville_cookie = htmlspecialchars($_GET['ville'] ?? '');
 	setcookie(
 		'derniere_consultation',
-		$dep_cookie . '|' . date('d/m/Y H:i'),
+		$dep_cookie . '|' . $ville_cookie . '|' . date('d/m/Y H:i'),
 		time() + (30 * 24 * 3600),
 		'/stationfinder/'
 	);
@@ -100,18 +101,19 @@ if (empty($departement) && empty($ville) && !$mode_geoloc) {
 
 <?php
 // --- Lecture et affichage du cookie dernière consultation ---
-if (isset($_COOKIE['derniere_consultation']) && !empty($_COOKIE['derniere_consultation'])) {
-	$cookie_data = explode('|', $_COOKIE['derniere_consultation']);
-	if (count($cookie_data) === 2) {
-		$dep_precedent  = htmlspecialchars($cookie_data[0]);
-		$date_precedent = htmlspecialchars($cookie_data[1]);
-		echo "<p class='texte-discret'>"
-			. $tr['derniere_consul']
-			. " <strong>" . $dep_precedent . "</strong> le " . $date_precedent
-			. "</p>";
-	} else {
-		setcookie('derniere_consultation', '', time() - 3600, '/stationfinder/');
-	}
+$cookie_data = explode('|', $_COOKIE['derniere_consultation']);
+if (count($cookie_data) === 3) {
+	$dep_precedent  = htmlspecialchars($cookie_data[0]);
+	$ville_precedente = htmlspecialchars($cookie_data[1]);
+	$date_precedent = htmlspecialchars($cookie_data[2]);
+	echo "<p class='texte-discret'>"
+		. $tr['derniere_consul']
+		. " <strong>" . $dep_precedent . "</strong>"
+		. (!empty($ville_precedente) ? " — <strong>" . $ville_precedente . "</strong>" : "")
+		. " le " . $date_precedent
+		. "</p>";
+} else {
+	setcookie('derniere_consultation', '', time() - 3600, '/stationfinder/');
 }
 ?>
 
