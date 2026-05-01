@@ -118,12 +118,14 @@ if ($derniere !== null) {
 <section>
 	<?php
 	// --- Appel de l'API gouvernementale (format JSON) ---
-	// --- Appel de l'API gouvernementale (format JSON) ---
 	if ($mode_geoloc && empty($departement)) {
-		// Mode géolocalisation : filtre par distance
 		$filtre = "dist(geo_point_2d%2C%22" . $lat_utilisateur . "%2C" . $lon_utilisateur . "%22)%3C%3D20000";
+	} elseif (!empty($ville) && !empty($departement)) {
+		// Filtre par ville ET département
+		$filtre = "code_departement%3D%22" . rawurlencode($departement) . "%22"
+			. "%20AND%20ville%3D%22" . rawurlencode(trim($ville)) . "%22";
 	} elseif (!empty($departement)) {
-		// On filtre par département uniquement pour avoir toutes les stations avec prix
+		// Filtre par département uniquement
 		$filtre = "code_departement%3D%22" . rawurlencode($departement) . "%22";
 	} else {
 		$filtre = "ville%3D%22" . rawurlencode(trim($ville)) . "%22";
@@ -139,6 +141,23 @@ if ($derniere !== null) {
 	if ($donnees === null || !isset($donnees['results'])) {
 		echo "<p>Impossible de récupérer les données. Veuillez réessayer.</p>";
 		$stations = [];
+	} elseif (count($donnees['results']) === 0 && !empty($ville)) {
+		// Fallback : on relance l'API sur tout le département
+		$filtre_dep = "code_departement%3D%22" . rawurlencode($departement) . "%22";
+		$url_fallback = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/records?"
+			. "where=" . $filtre_dep
+			. "&limit=50"
+			. "&timezone=Europe%2FParis";
+		$json_fallback = file_get_contents($url_fallback);
+		$donnees_fallback = json_decode($json_fallback, true);
+		if ($donnees_fallback !== null && !empty($donnees_fallback['results'])) {
+			$stations = $donnees_fallback['results'];
+			$mode_fallback = true;
+			echo "<p class='texte-discret'>" . $tr['pas_station_ville'] . " <strong>" . htmlspecialchars($departement) . "</strong>.</p>";
+		} else {
+			$stations = [];
+			echo "<p>" . $tr['aucune_station'] . "</p>";
+		}
 	} elseif (count($donnees['results']) === 0) {
 		$stations = [];
 		echo "<p>" . $tr['aucune_station'] . "</p>";
@@ -212,8 +231,13 @@ if ($derniere !== null) {
 		if (!empty($ville)) {
 			echo "<p class='texte-discret'>" . $tr['pas_station_ville'] . " <strong>" . $departement . "</strong>.</p>";
 		}
-		echo "<p><strong>" . count($stations) . "</strong> " . $tr['stations_trouvees'] . " — " . $tr['departement'] . " <strong>" . $departement . "</strong>.</p>";
-		?>
+		if (!empty($mode_fallback)) {
+			echo "<p><strong>" . count($stations) . "</strong> " . $tr['stations_trouvees'] . " — " . $tr['departement'] . " <strong>" . $departement . "</strong>.</p>";
+		} else if (!empty($ville)) {
+			echo "<p><strong>" . count($stations) . "</strong> " . $tr['stations_trouvees'] . " — <strong>" . htmlspecialchars($ville) . "</strong>.</p>";
+		} else {
+			echo "<p><strong>" . count($stations) . "</strong> " . $tr['stations_trouvees'] . " — " . $tr['departement'] . " <strong>" . $departement . "</strong>.</p>";
+		}		?>
 		<form action="resultats.php#resultats" method="get">
 			<input type="hidden" name="departement" value="<?= htmlspecialchars($departement) ?>" />
 			<input type="hidden" name="ville" value="<?= htmlspecialchars($ville) ?>" />

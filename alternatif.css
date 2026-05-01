@@ -43,6 +43,14 @@ body {
     color: #eaeaea !important;
 }
 
+.barre-options img {
+    color: #f0c040;
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+
 section {
     background-color: #16213e !important;
     border-color: #2a2a4a !important;

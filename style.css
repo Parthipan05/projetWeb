@@ -83,24 +83,35 @@ body {
     color: #fff;
 }
 
+
 /* --- Barre options --- */
 .barre-options {
     background-color: var(--couleur-secondaire);
-    text-align: right;
     padding: 6px 30px;
     font-size: 0.85em;
     border-bottom: 1px solid var(--couleur-bordure);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 .barre-options a {
     color: var(--couleur-primaire);
     text-decoration: none;
-    margin-left: 10px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
 }
 
 .barre-options a:hover {
     color: var(--couleur-accent);
+}
+
+.barre-options img {
+    width: 20px;
+    height: 20px;
+    display: block;
 }
 
 /* --- Conteneur --- */
