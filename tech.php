@@ -51,13 +51,13 @@ require_once("./includes/traductions.inc.php");
 
         <figure>
             <img src="<?= htmlspecialchars($film['image']) ?>"
-                alt="<?= $tr['affiche'] ?> — <?= htmlspecialchars($film['title']) ?>">
+                alt="<?= $tr['affiche'] ?> du film <?= htmlspecialchars($film['title']) ?>">
             <figcaption><?= $tr['affiche'] ?> — <?= htmlspecialchars($film['title']) ?></figcaption>
         </figure>
 
         <figure>
             <img src="<?= htmlspecialchars($film['movie_banner']) ?>"
-                alt="<?= $tr['banniere'] ?> — <?= htmlspecialchars($film['title']) ?>">
+                alt="<?= $tr['banniere'] ?> promotionnelle du film <?= htmlspecialchars($film['title']) ?>">
             <figcaption><?= $tr['banniere'] ?> — <?= htmlspecialchars($film['title']) ?></figcaption>
         </figure>
 

@@ -25,7 +25,7 @@ $t = [
 		'selectionnez' => 'Sélectionnez votre région',
 		'carte_texte' => 'Cliquez sur votre région sur la carte pour trouver les stations-service et les prix des carburants près de chez vous.',
 		'carte_alt' => 'Carte des régions de France',
-		'carte_legende' => 'Carte administrative des régions de France — Source : IGN (education.ign.fr)',
+		'carte_legende' => 'Carte administrative des régions de France — Source : IGN (https://www.ign.fr)',
 		'region_selectionnee' => 'Région sélectionnée',
 		'choisissez' => 'Choisissez votre département et votre ville',
 		'departement' => 'Département',
@@ -201,7 +201,7 @@ $t = [
 		'selectionnez' => 'Select your region',
 		'carte_texte' => 'Click on your region on the map to find gas stations and fuel prices near you.',
 		'carte_alt' => 'Map of French regions',
-		'carte_legende' => 'Administrative map of French regions — Source: IGN (education.ign.fr)',
+		'carte_legende' => 'Administrative map of French regions — Source: IGN (https://www.ign.fr)',
 		'region_selectionnee' => 'Selected region',
 		'choisissez' => 'Choose your department and city',
 		'departement' => 'Department',
@@ -360,7 +360,7 @@ $t = [
 		'conf_cont_texte' => 'For any privacy questions, contact the project authors via CY Cergy Paris University.',
 		'pas_station_ville' => 'No station found in this city. Here are the stations in department',
 
-		]
+	]
 ];
 // Raccourci : $tr['clé'] pour accéder à la langue courante
 $tr = $t[$lang] ?? $t['fr'];

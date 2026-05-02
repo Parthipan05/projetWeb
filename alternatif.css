@@ -21,6 +21,10 @@
     --couleur-lien: #5db85d !important;
 }
 
+h3 {
+    color: #5db85d !important;
+}
+
 body {
     background-color: #0f0f1a !important;
     color: #eaeaea !important;
@@ -93,7 +97,20 @@ footer {
 }
 
 .back-to-top {
-    background-color: #5db85d !important;
+    background-color: #ffffff !important;
+    color: #1a1a2e !important;
+}
+
+figcaption {
+    color: #cccccc !important;
+}
+
+thead {
+    background-color: #1a3c6e !important;
+}
+
+th {
+    color: #ffffff !important;
 }
 
 .prix-bas    { background-color: #1a3a2a !important; color: #eaeaea !important; }

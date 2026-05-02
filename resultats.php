@@ -115,7 +115,7 @@ if ($derniere !== null) {
 		. "</p>";
 }
 ?>
-<section>
+<div>
 	<?php
 	// --- Appel de l'API gouvernementale (format JSON) ---
 	if ($mode_geoloc && empty($departement)) {
@@ -285,12 +285,12 @@ if ($derniere !== null) {
 				<label><input type="checkbox" name="carburants[]" value="e10" <?= (!isset($_GET['carburants']) || in_array('e10',    $_GET['carburants'])) ? 'checked' : '' ?>> E10</label>
 				<label><input type="checkbox" name="carburants[]" value="gplc" <?= (!isset($_GET['carburants']) || in_array('gplc',   $_GET['carburants'])) ? 'checked' : '' ?>> GPL</label>
 				<label><input type="checkbox" name="services" <?= isset($_GET['services']) ? 'checked' : '' ?>> <?= $lang === 'fr' ? 'Afficher les services' : 'Show services' ?></label>
-				<label><?= $tr['trier_prix'] ?> :
-					<select name="tri">
-						<option value=""><?= $tr['aucun_tri'] ?></option>
-						<option value="asc" <?= (isset($_GET['tri']) && $_GET['tri'] === 'asc')  ? 'selected' : '' ?>><?= $tr['croissant'] ?></option>
-						<option value="desc" <?= (isset($_GET['tri']) && $_GET['tri'] === 'desc') ? 'selected' : '' ?>><?= $tr['decroissant'] ?></option>
-					</select>
+				<label for="tri"><?= $tr['trier_prix'] ?> :</label>
+				<select name="tri" id="tri">
+					<option value=""><?= $tr['aucun_tri'] ?></option>
+					<option value="asc" <?= (isset($_GET['tri']) && $_GET['tri'] === 'asc')  ? 'selected' : '' ?>><?= $tr['croissant'] ?></option>
+					<option value="desc" <?= (isset($_GET['tri']) && $_GET['tri'] === 'desc') ? 'selected' : '' ?>><?= $tr['decroissant'] ?></option>
+				</select>
 				</label>
 
 				<button type="submit" class="btn"><?= $tr['appliquer'] ?></button>
@@ -384,7 +384,7 @@ if ($derniere !== null) {
 							<?php if (!isset($_GET['services'])) { ?>
 								<td>
 									<a href="resultats.php?departement=<?= urlencode($departement) ?>&ville=<?= urlencode($ville) ?>&style=<?= $styleUrl ?>&lang=<?= $lang ?>&voir_station=<?= htmlspecialchars((string)($station['id'] ?? '')) ?><?php foreach ($carburants_choisis as $c) {
-																																																														echo '&carburants[]=' . urlencode($c);
+																																																														echo '&carburants%5B%5D=' . urlencode($c);
 																																																													} ?>#station-<?= htmlspecialchars((string)($station['id'] ?? '')) ?>" class="btn">
 										<?= $lang === 'fr' ? 'Services' : 'Services' ?>
 									</a>
@@ -414,12 +414,12 @@ if ($derniere !== null) {
 		</div>
 
 	<?php } ?>
-</section>
+</div>
 
-<section>
+<div>
 	<a href="index.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>" class="btn">
 		<?= $tr['retour_carte'] ?>
 	</a>
-</section>
+</div>
 
 <?php require_once("./includes/footer.inc.php"); ?>

@@ -110,7 +110,7 @@ require_once("./includes/traductions.inc.php");
                 <td><?= $tr['src_csv'] ?></td>
             </tr>
             <tr>
-                <td><a href="http://education.ign.fr" target="_blank">IGN</a></td>
+                <td><a href="https://www.ign.fr" target="_blank">IGN</a></td>
                 <td>Image</td>
                 <td><?= $tr['src_ign'] ?></td>
             </tr>

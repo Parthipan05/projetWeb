@@ -142,10 +142,9 @@ h2 {
 
 h3 {
     font-size: 1.1em;
-    color: var(--couleur-accent);
+    color: #2d7a2d;
     margin-bottom: 10px;
 }
-
 /* --- Paragraphes --- */
 p {
     margin-bottom: 12px;
@@ -250,7 +249,7 @@ legend {
 
 label {
     font-size: 0.95em;
-    color: var(--couleur-texte-discret);
+    color: var(--couleur-texte);
     margin-bottom: 4px;
     display: block;
 }
@@ -286,7 +285,7 @@ input:focus, select:focus, textarea:focus {
 
 /* --- Boutons --- */
 button, .btn {
-    background-color: var(--couleur-accent);
+   background-color: #2d7a2d;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -300,7 +299,7 @@ button, .btn {
 }
 
 button:hover, .btn:hover {
-    background-color: #4aa54a;
+    background-color: #1e5c1e;
     transform: translateY(-1px);
 }
 
@@ -319,7 +318,7 @@ figure img {
 
 figcaption {
     font-size: 0.85em;
-    color: var(--couleur-texte-discret);
+    color: #555555;
     margin-top: 8px;
     font-style: italic;
 }
@@ -355,10 +354,9 @@ footer {
 }
 
 footer a {
-    color: var(--couleur-accent);
-    text-decoration: none;
+    color: #ffffff;
+    text-decoration: underline;
 }
-
 footer a:hover {
     text-decoration: underline;
 }
@@ -383,7 +381,7 @@ footer p {
 .barre-label {
     min-width: 120px;
     font-size: 0.9em;
-    color: var(--couleur-texte-discret);
+    color: var(--couleur-texte);
     text-align: right;
     font-weight: bold;
 }
@@ -405,7 +403,7 @@ footer p {
 
 /* --- Classes utilitaires --- */
 .texte-centre  { text-align: center; }
-.texte-discret { color: var(--couleur-texte-discret); font-size: 0.9em; }
+.texte-discret { color: #555555; font-size: 0.9em; }
 .marge-haut    { margin-top: 20px; }
 
 /* --- Flèche retour haut --- */
@@ -413,8 +411,8 @@ footer p {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background-color: var(--couleur-accent);
-    color: white;
+  background-color: #2d7a2d;
+    color: #ffffff;
     border: none;
     border-radius: 50%;
     width: 45px;
@@ -430,7 +428,7 @@ footer p {
 }
 
 .back-to-top:hover {
-    background-color: var(--couleur-accent);
+    background-color: #1e5c1e;
     text-decoration: none;
 }
 
@@ -447,7 +445,7 @@ footer p {
     padding: 4px 12px;
     border-radius: 4px;
     font-weight: bold;
-    color: #333;
+    color: #000000;
 }
 
 .prix-bas    { background-color: #d4edda; text-align: center; }
