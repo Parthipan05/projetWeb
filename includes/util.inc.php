@@ -1,4 +1,16 @@
 <?php
+
+/**
+ * @file util.inc.php
+ * @brief Fonctions utilitaires diverses de StationFinder.
+ * @author PIRABAKARAN Parthipan & HANANE Sanaa
+ * @date 2026
+ */
+
+/**
+ * @brief Détecte le navigateur de l'utilisateur depuis le User-Agent.
+ * @return string Nom du navigateur détecté.
+ */
 function get_navigateur(): string
 {
     if (isset($_SERVER['HTTP_USER_AGENT'])) {
