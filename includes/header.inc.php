@@ -78,8 +78,7 @@ $hits = incrementer_hits('./data/hits.txt');
 <body>
 	<header class="site-header">
 		<a href="index.php?style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>" class="logo">
-			<img src="images/logo.png" alt="StationFinder - Prix des carburants en temps réel" />
-		</a>
+			<img src="images/logo.png" alt="StationFinder - Prix des carburants en temps réel" width="150" height="55" /> </a>
 
 		<nav class="menu-principal">
 			<ul>
@@ -94,19 +93,19 @@ $hits = incrementer_hits('./data/hits.txt');
 	<div class="barre-options">
 		<?php $params = $_GET; ?>
 		<?php if ($styleUrl === 'standard') { ?>
-			<a href="?<?= http_build_query(array_merge($params, ['style' => 'alternatif'])) ?>">
+			<a href="?<?= htmlspecialchars(http_build_query(array_merge($params, ['style' => 'alternatif']))) ?>">
 				<img src="images/mode_nuit.svg" alt="Passer en mode nuit" />
 			</a>
 		<?php } else { ?>
-			<a href="?<?= http_build_query(array_merge($params, ['style' => 'standard'])) ?>">
+			<a href="?<?= htmlspecialchars(http_build_query(array_merge($params, ['style' => 'standard']))) ?>">
 				<img src="images/mode_jour.svg" alt="Passer en mode jour" />
 			</a>
 		<?php } ?>
 		<span>|</span>
 		<?php if ($lang === 'fr') { ?>
-			<a href="?<?= http_build_query(array_merge($params, ['lang' => 'en'])) ?>">English</a>
+			<a href="?<?= htmlspecialchars(http_build_query(array_merge($params, ['lang' => 'en']))) ?>">English</a>
 		<?php } else { ?>
-			<a href="?<?= http_build_query(array_merge($params, ['lang' => 'fr'])) ?>">Français</a>
+			<a href="?<?= htmlspecialchars(http_build_query(array_merge($params, ['lang' => 'fr']))) ?>">Français</a>
 		<?php } ?>
 	</div>
 

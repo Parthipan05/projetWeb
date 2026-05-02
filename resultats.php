@@ -103,12 +103,13 @@ if (empty($departement) && empty($ville) && !$mode_geoloc) {
 // --- Lecture et affichage du cookie dernière consultation ---
 $derniere = get_derniere_consultation();
 if ($derniere !== null) {
+	$href = 'resultats.php?departement=' . urlencode($derniere['departement'])
+		. '&amp;ville=' . urlencode($derniere['ville'])
+		. '&amp;style=' . $styleUrl
+		. '&amp;lang=' . $lang;
 	echo "<p class='texte-discret'>"
 		. $tr['derniere_consul']
-		. " <a href='resultats.php?departement=" . urlencode($derniere['departement'])
-		. "&ville=" . urlencode($derniere['ville'])
-		. "&style=" . $styleUrl
-		. "&lang=" . $lang . "'>"
+		. " <a href='" . $href . "'>"
 		. "<strong>" . $derniere['departement'] . "</strong>"
 		. (!empty($derniere['ville']) ? " — <strong>" . $derniere['ville'] . "</strong>" : "")
 		. "</a> le " . $derniere['date']
@@ -279,20 +280,18 @@ if ($derniere !== null) {
 
 			<fieldset>
 				<legend><?= $tr['filtrer'] ?></legend>
-				<label><input type="checkbox" name="carburants[]" value="sp95" <?= (!isset($_GET['carburants']) || in_array('sp95',   $_GET['carburants'])) ? 'checked' : '' ?>> SP95</label>
-				<label><input type="checkbox" name="carburants[]" value="sp98" <?= (!isset($_GET['carburants']) || in_array('sp98',   $_GET['carburants'])) ? 'checked' : '' ?>> SP98</label>
-				<label><input type="checkbox" name="carburants[]" value="gazole" <?= (!isset($_GET['carburants']) || in_array('gazole', $_GET['carburants'])) ? 'checked' : '' ?>> Gazole</label>
-				<label><input type="checkbox" name="carburants[]" value="e10" <?= (!isset($_GET['carburants']) || in_array('e10',    $_GET['carburants'])) ? 'checked' : '' ?>> E10</label>
-				<label><input type="checkbox" name="carburants[]" value="gplc" <?= (!isset($_GET['carburants']) || in_array('gplc',   $_GET['carburants'])) ? 'checked' : '' ?>> GPL</label>
-				<label><input type="checkbox" name="services" <?= isset($_GET['services']) ? 'checked' : '' ?>> <?= $lang === 'fr' ? 'Afficher les services' : 'Show services' ?></label>
+				<label><input type="checkbox" name="carburants[]" value="sp95" <?= (!isset($_GET['carburants']) || in_array('sp95',   $_GET['carburants'])) ? 'checked="checked"' : '' ?> /> SP95</label>
+				<label><input type="checkbox" name="carburants[]" value="sp98" <?= (!isset($_GET['carburants']) || in_array('sp98',   $_GET['carburants'])) ? 'checked="checked"' : '' ?> /> SP98</label>
+				<label><input type="checkbox" name="carburants[]" value="gazole" <?= (!isset($_GET['carburants']) || in_array('gazole', $_GET['carburants'])) ? 'checked="checked"' : '' ?> /> Gazole</label>
+				<label><input type="checkbox" name="carburants[]" value="e10" <?= (!isset($_GET['carburants']) || in_array('e10',    $_GET['carburants'])) ? 'checked="checked"' : '' ?> /> E10</label>
+				<label><input type="checkbox" name="carburants[]" value="gplc" <?= (!isset($_GET['carburants']) || in_array('gplc',   $_GET['carburants'])) ? 'checked="checked"' : '' ?> /> GPL</label>
+				<label><input type="checkbox" name="services" <?= isset($_GET['services']) ? 'checked="checked"' : '' ?> /> <?= $lang === 'fr' ? 'Afficher les services' : 'Show services' ?></label>
 				<label for="tri"><?= $tr['trier_prix'] ?> :</label>
 				<select name="tri" id="tri">
 					<option value=""><?= $tr['aucun_tri'] ?></option>
 					<option value="asc" <?= (isset($_GET['tri']) && $_GET['tri'] === 'asc')  ? 'selected' : '' ?>><?= $tr['croissant'] ?></option>
 					<option value="desc" <?= (isset($_GET['tri']) && $_GET['tri'] === 'desc') ? 'selected' : '' ?>><?= $tr['decroissant'] ?></option>
 				</select>
-				</label>
-
 				<button type="submit" class="btn"><?= $tr['appliquer'] ?></button>
 			</fieldset>
 		</form>
@@ -383,9 +382,9 @@ if ($derniere !== null) {
 							<?php } ?>
 							<?php if (!isset($_GET['services'])) { ?>
 								<td>
-									<a href="resultats.php?departement=<?= urlencode($departement) ?>&ville=<?= urlencode($ville) ?>&style=<?= $styleUrl ?>&lang=<?= $lang ?>&voir_station=<?= htmlspecialchars((string)($station['id'] ?? '')) ?><?php foreach ($carburants_choisis as $c) {
-																																																														echo '&carburants%5B%5D=' . urlencode($c);
-																																																													} ?>#station-<?= htmlspecialchars((string)($station['id'] ?? '')) ?>" class="btn">
+									<a href="resultats.php?departement=<?= urlencode($departement) ?>&amp;ville=<?= urlencode($ville) ?>&amp;style=<?= $styleUrl ?>&amp;lang=<?= $lang ?>&amp;voir_station=<?= htmlspecialchars((string)($station['id'] ?? '')) ?><?php foreach ($carburants_choisis as $c) {
+																																																																		echo '&amp;carburants%5B%5D=' . urlencode($c);
+																																																																	} ?>#station-<?= htmlspecialchars((string)($station['id'] ?? '')) ?>" class="btn">
 										<?= $lang === 'fr' ? 'Services' : 'Services' ?>
 									</a>
 								</td>
