@@ -327,7 +327,6 @@ if ($derniere !== null) {
 			<table>
 				<thead>
 					<tr>
-						<th><?= $tr['station'] ?></th>
 						<th><?= $tr['adresse'] ?></th>
 						<th><?= $tr['ville'] ?></th>
 						<?php if (in_array('sp95', $carburants_choisis)) { ?><th>SP95</th><?php } ?>
@@ -343,7 +342,6 @@ if ($derniere !== null) {
 				<tbody>
 					<?php foreach ($stations as $station) { ?>
 						<tr id="station-<?= htmlspecialchars((string)($station['id'] ?? '')) ?>">
-							<td><?= htmlspecialchars($station['ensigne'] ?? 'N/A') ?></td>
 							<td><?= htmlspecialchars($station['adresse'] ?? 'N/A') ?></td>
 							<td><?= htmlspecialchars($station['ville'] ?? 'N/A') ?></td>
 							<?php if (in_array('sp95', $carburants_choisis)) { ?>
