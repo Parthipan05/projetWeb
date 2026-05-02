@@ -9,154 +9,143 @@
 
 declare(strict_types=1);
 
-$titre = "Sources";
+$titre       = "Sources";
 $description = "Sources des données et crédits de StationFinder";
 
 require_once("./includes/functions.inc.php");
 require_once("./includes/header.inc.php");
+require_once("./includes/traductions.inc.php");
 ?>
 
-<h1>📚 Sources & Crédits</h1>
+<h1><?= $tr['sources_titre'] ?></h1>
 
 <section>
-    <h2>⛽ Données carburants</h2>
-    <p>
-        Les prix des carburants sont issus de l'API officielle du gouvernement français,
-        mise à disposition en open data et mise à jour en temps réel.
-    </p>
+    <h2><?= $tr['sources_carburants'] ?></h2>
+    <p><?= $tr['sources_carb_texte'] ?></p>
     <table>
         <thead>
             <tr>
-                <th>Source</th>
-                <th>Format</th>
-                <th>Utilisation</th>
+                <th><?= $tr['col_source'] ?></th>
+                <th><?= $tr['col_format'] ?></th>
+                <th><?= $tr['col_role'] ?></th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><a href="https://data.economie.gouv.fr/explore/dataset/prix-des-carburants-en-france-flux-instantane-v2/" target="_blank">data.economie.gouv.fr</a></td>
                 <td>JSON</td>
-                <td>Prix des carburants en temps réel</td>
+                <td><?= $tr['src_carb_reel'] ?></td>
             </tr>
             <tr>
                 <td><a href="https://www.prix-carburants.gouv.fr/rubrique/opendata/" target="_blank">prix-carburants.gouv.fr</a></td>
                 <td>XML / CSV</td>
-                <td>Données historiques des prix</td>
+                <td><?= $tr['src_carb_histo'] ?></td>
             </tr>
         </tbody>
     </table>
 </section>
 
 <section>
-    <h2>📍 Géolocalisation</h2>
-    <p>
-        La géolocalisation approximative des visiteurs est réalisée à partir
-        de leur adresse IP via deux services externes.
-    </p>
+    <h2><?= $tr['sources_geoloc'] ?></h2>
+    <p><?= $tr['sources_geo_texte'] ?></p>
     <table>
         <thead>
             <tr>
-                <th>Service</th>
-                <th>Format</th>
-                <th>Utilisation</th>
+                <th><?= $tr['col_service'] ?></th>
+                <th><?= $tr['col_format'] ?></th>
+                <th><?= $tr['col_role'] ?></th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><a href="https://ipinfo.io" target="_blank">ipinfo.io</a></td>
                 <td>JSON</td>
-                <td>Détection de la position sur la page d'accueil</td>
+                <td><?= $tr['src_ip_accueil'] ?></td>
             </tr>
             <tr>
                 <td><a href="https://www.ip2location.io" target="_blank">ip2location.io</a></td>
                 <td>XML</td>
-                <td>Démonstration de la maîtrise des flux XML (page Tech)</td>
+                <td><?= $tr['src_ip_xml'] ?></td>
             </tr>
         </tbody>
     </table>
 </section>
 
 <section>
-    <h2>🎬 API Ghibli</h2>
-    <p>
-        La page technique utilise l'API du studio japonais Ghibli pour
-        démontrer la maîtrise des échanges JSON avec une API REST externe.
-    </p>
+    <h2><?= $tr['sources_ghibli'] ?></h2>
+    <p><?= $tr['sources_ghib_texte'] ?></p>
     <table>
         <thead>
             <tr>
-                <th>Service</th>
-                <th>Format</th>
-                <th>Utilisation</th>
+                <th><?= $tr['col_service'] ?></th>
+                <th><?= $tr['col_format'] ?></th>
+                <th><?= $tr['col_role'] ?></th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><a href="https://ghibliapi.vercel.app/" target="_blank">Ghibli API</a></td>
                 <td>JSON</td>
-                <td>Affichage d'un film aléatoire sur la page Tech</td>
+                <td><?= $tr['src_ghibli'] ?></td>
             </tr>
         </tbody>
     </table>
 </section>
 
 <section>
-    <h2>🗺️ Données géographiques</h2>
-    <p>
-        Les données des régions, départements et communes de France
-        sont issues des sources officielles de l'État français.
-    </p>
+    <h2><?= $tr['sources_geo_data'] ?></h2>
+    <p><?= $tr['sources_geo_d_texte'] ?></p>
     <table>
         <thead>
             <tr>
-                <th>Source</th>
-                <th>Format</th>
-                <th>Utilisation</th>
+                <th><?= $tr['col_source'] ?></th>
+                <th><?= $tr['col_format'] ?></th>
+                <th><?= $tr['col_role'] ?></th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><a href="https://www.data.gouv.fr" target="_blank">data.gouv.fr</a></td>
                 <td>CSV</td>
-                <td>Liste des régions et départements de France</td>
+                <td><?= $tr['src_csv'] ?></td>
             </tr>
             <tr>
                 <td><a href="http://education.ign.fr" target="_blank">IGN</a></td>
                 <td>Image</td>
-                <td>Carte administrative des régions de France</td>
+                <td><?= $tr['src_ign'] ?></td>
             </tr>
         </tbody>
     </table>
 </section>
 
 <section>
-    <h2>🛠️ Technologies</h2>
+    <h2><?= $tr['sources_tech'] ?></h2>
     <table>
         <thead>
             <tr>
-                <th>Technologie</th>
-                <th>Version</th>
-                <th>Rôle</th>
+                <th><?= $tr['col_techno'] ?? 'Technologie' ?></th>
+                <th><?= $tr['col_version'] ?></th>
+                <th><?= $tr['col_role'] ?></th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>HTML</td>
                 <td>5</td>
-                <td>Structure et sémantique des pages</td>
+                <td><?= $tr['src_html'] ?></td>
             </tr>
             <tr>
                 <td>CSS</td>
                 <td>3</td>
-                <td>Mise en forme et charte graphique</td>
+                <td><?= $tr['src_css'] ?></td>
             </tr>
             <tr>
                 <td>PHP</td>
                 <td>8</td>
-                <td>Traitement serveur et appels API</td>
+                <td><?= $tr['src_php'] ?></td>
             </tr>
             <tr>
-                <td>Hébergement</td>
+                <td><?= $tr['src_hebergement'] ?></td>
                 <td>—</td>
                 <td><a href="https://www.alwaysdata.com" target="_blank">AlwaysData</a></td>
             </tr>

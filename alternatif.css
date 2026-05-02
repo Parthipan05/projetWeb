@@ -44,7 +44,6 @@ body {
 }
 
 .barre-options img {
-    color: #f0c040;
     width: 20px;
     height: 20px;
     display: block;
@@ -52,8 +51,14 @@ body {
 
 
 section {
-    background-color: #16213e !important;
-    border-color: #2a2a4a !important;
+    background-color: transparent !important;
+    border: 1px solid transparent !important;
+}
+
+section:hover {
+    background-color: #1a1a2e !important;
+    border: 1px solid #2a2a4a !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3) !important;
 }
 
 h1, h2 {
@@ -62,10 +67,6 @@ h1, h2 {
 
 p, li, td, label {
     color: #eaeaea !important;
-}
-
-.cellule-prix {
-    color: #333 !important;
 }
 
 input, select, textarea {
@@ -94,3 +95,7 @@ footer {
 .back-to-top {
     background-color: #5db85d !important;
 }
+
+.prix-bas    { background-color: #1a3a2a !important; color: #eaeaea !important; }
+.prix-moyen  { background-color: #3a3a1a !important; color: #eaeaea !important; }
+.prix-eleve  { background-color: #3a1a1a !important; color: #eaeaea !important; }

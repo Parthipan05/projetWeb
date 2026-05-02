@@ -26,8 +26,11 @@ require_once("./includes/traductions.inc.php");
 
     <?php
     // 1. Récupération du flux JSON depuis l'API Ghibli
-    $json = file_get_contents("https://ghibliapi.vercel.app/films");
-
+    $json = recuperer_avec_cache(
+        "https://ghibliapi.vercel.app/films",
+        "./data/cache_ghibli.json",
+        3600 // 1 heure
+    );
     // 2. Vérification que l'API répond correctement
     if ($json === false) {
         echo "<p>" . $tr['ghibli_erreur'] . "</p>";
@@ -78,7 +81,7 @@ require_once("./includes/traductions.inc.php");
 
     $contenu_api = @file_get_contents($url);
 
-    if ($contenu_api !== false && str_contains($contenu_api, '<?xml')) {
+    if ($contenu_api !== false && strpos($contenu_api, '<?xml') !== false) {
         $xml = simplexml_load_string($contenu_api);
 
         // Extraction des balises XML de la réponse

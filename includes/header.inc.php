@@ -13,7 +13,7 @@
 require_once("./includes/util.inc.php");
 
 // --- Chemin du site pour les cookies (4ème paramètre obligatoire) ---
-define('COOKIE_PATH', '/stationfinder/');
+define('COOKIE_PATH', '/');
 define('COOKIE_DUREE', time() + (30 * 24 * 3600)); // 30 jours
 
 // GESTION DU COOKIE MODE JOUR/NUIT
@@ -44,10 +44,21 @@ if (isset($_GET['style']) && !empty($_GET['style'])) {
 // GESTION DE LA LANGUE
 if (isset($_GET['lang']) && !empty($_GET['lang'])) {
 	$lang = $_GET['lang'];
+	if ($lang !== 'fr' && $lang !== 'en') {
+		setcookie('lang', '', time() - 3600, COOKIE_PATH);
+		$lang = 'fr';
+	} else {
+		setcookie('lang', $lang, COOKIE_DUREE, COOKIE_PATH);
+	}
+} elseif (isset($_COOKIE['lang']) && !empty($_COOKIE['lang'])) {
+	$lang = $_COOKIE['lang'];
+	if ($lang !== 'fr' && $lang !== 'en') {
+		setcookie('lang', '', time() - 3600, COOKIE_PATH);
+		$lang = 'fr';
+	}
 } else {
 	$lang = 'fr';
 }
-
 // COMPTEUR DE HITS
 $hits = incrementer_hits('./data/hits.txt');
 ?>

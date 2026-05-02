@@ -50,7 +50,7 @@ if (isset($_GET['departement']) && !empty($_GET['departement'])) {
 		'derniere_consultation',
 		$dep_cookie . '|' . $ville_cookie . '|' . date('d/m/Y H:i'),
 		time() + (30 * 24 * 3600),
-		'/stationfinder/'
+		'/'
 	);
 }
 
@@ -136,7 +136,8 @@ if ($derniere !== null) {
 		. "&limit=" . ($mode_geoloc ? 100 : 50)
 		. "&timezone=Europe%2FParis";
 
-	$json_brut = file_get_contents($url_api);
+	$fichier_cache = './data/cache_' . md5($url_api) . '.json';
+	$json_brut = recuperer_avec_cache($url_api, $fichier_cache, 600);
 	$donnees   = json_decode($json_brut, true);
 	if ($donnees === null || !isset($donnees['results'])) {
 		echo "<p>Impossible de récupérer les données. Veuillez réessayer.</p>";
@@ -166,8 +167,19 @@ if ($derniere !== null) {
 
 	// --- Le traitement des stations se fait ICI pour tous les cas ---
 	if (!empty($stations)) {
-		$carburants_choisis = $_GET['carburants'] ?? ['sp95', 'sp98', 'gazole', 'e10', 'gplc'];
-		$tri = $_GET['tri'] ?? '';
+		// Carburants choisis par l'utilisateur, tous par défaut
+		if (isset($_GET['carburants']) && !empty($_GET['carburants'])) {
+			$carburants_choisis = $_GET['carburants'];
+		} else {
+			$carburants_choisis = ['sp95', 'sp98', 'gazole', 'e10', 'gplc'];
+		}
+
+		// Tri choisi par l'utilisateur, aucun par défaut
+		if (isset($_GET['tri']) && !empty($_GET['tri'])) {
+			$tri = $_GET['tri'];
+		} else {
+			$tri = '';
+		}
 		// --- Mode géolocalisation ---
 		if ($mode_geoloc) {
 			foreach ($stations as &$station) {
@@ -193,34 +205,54 @@ if ($derniere !== null) {
 				$stations = array_values($stations);
 			}
 
-			usort($stations, function ($a, $b) {
-				return $a['distance_km'] <=> $b['distance_km'];
-			});
+			// Tri par distance croissante (tri à bulles simple)
+			$nb = count($stations);
+			for ($i = 0; $i < $nb - 1; $i++) {
+				for ($j = 0; $j < $nb - $i - 1; $j++) {
+					if ($stations[$j]['distance_km'] > $stations[$j + 1]['distance_km']) {
+						$temp = $stations[$j];
+						$stations[$j] = $stations[$j + 1];
+						$stations[$j + 1] = $temp;
+					}
+				}
+			}
 
 			// --- Mode normal : tri par prix ---
 		} elseif ($tri === 'asc' || $tri === 'desc') {
-			usort($stations, function ($a, $b) use ($tri, $carburants_choisis) {
-				$prix_a = [];
-				$prix_b = [];
+			// Tri simple : on extrait le prix minimum de chaque station
+			$prix_min = [];
+			foreach ($stations as $i => $station) {
+				$min = 9999;
 				foreach ($carburants_choisis as $c) {
-					if (!empty($a[$c . '_prix'])) $prix_a[] = $a[$c . '_prix'];
-					if (!empty($b[$c . '_prix'])) $prix_b[] = $b[$c . '_prix'];
+					if (!empty($station[$c . '_prix']) && (float)$station[$c . '_prix'] < $min) {
+						$min = (float)$station[$c . '_prix'];
+					}
 				}
-				$min_a = !empty($prix_a) ? min($prix_a) : 9999;
-				$min_b = !empty($prix_b) ? min($prix_b) : 9999;
-				return ($tri === 'asc') ? $min_a <=> $min_b : $min_b <=> $min_a;
-			});
+				$prix_min[$i] = $min;
+			}
+			// Tri du tableau des prix puis on réordonne les stations
+			if ($tri === 'asc') {
+				asort($prix_min);
+			} else {
+				arsort($prix_min);
+			}
+			$stations_triees = [];
+			foreach ($prix_min as $i => $prix) {
+				$stations_triees[] = $stations[$i];
+			}
+			$stations = $stations_triees;
 		}
 
-		// --- Filtre carburants ---
-		$stations_filtrees = array_filter($stations, function ($s) use ($carburants_choisis) {
+		// --- Filtre carburants : on garde seulement les stations qui ont au moins un prix ---
+		$stations_filtrees = [];
+		foreach ($stations as $station) {
 			foreach ($carburants_choisis as $c) {
-				if (!empty($s[$c . '_prix'])) return true;
+				if (!empty($station[$c . '_prix'])) {
+					$stations_filtrees[] = $station;
+					break; // on passe à la station suivante dès qu'on trouve un prix
+				}
 			}
-			return false;
-		});
-		$stations_filtrees = array_values($stations_filtrees);
-
+		}
 		// Si après filtre il ne reste rien, on garde toutes les stations
 		if (!empty($stations_filtrees)) {
 			$stations = $stations_filtrees;
@@ -228,7 +260,7 @@ if ($derniere !== null) {
 	?>
 		<?php
 		if (!empty($mode_fallback)) {
-    		echo "<p class='texte-discret'>" . $tr['pas_station_ville'] . " <strong>" . $departement . "</strong>.</p>";
+			echo "<p class='texte-discret'>" . $tr['pas_station_ville'] . " <strong>" . $departement . "</strong>.</p>";
 		}
 		if (!empty($mode_fallback)) {
 			echo "<p><strong>" . count($stations) . "</strong> " . $tr['stations_trouvees'] . " — " . $tr['departement'] . " <strong>" . $departement . "</strong>.</p>";
@@ -280,104 +312,107 @@ if ($derniere !== null) {
 					<fieldset>
 						<legend><?= $tr['rayon'] ?></legend>
 						<label for="rayon"><?= $tr['distance'] ?> :</label>
-						<select name="rayon" id="rayon" onchange="this.form.submit()">
+						<select name="rayon" id="rayon">
 							<option value="1" <?= ($rayon_km === 1)  ? 'selected' : '' ?>>1 km</option>
 							<option value="5" <?= ($rayon_km === 5)  ? 'selected' : '' ?>>5 km</option>
 							<option value="10" <?= ($rayon_km === 10) ? 'selected' : '' ?>>10 km</option>
 							<option value="20" <?= ($rayon_km === 20) ? 'selected' : '' ?>>20 km</option>
 							<option value="0" <?= ($rayon_km === 0)  ? 'selected' : '' ?>><?= $tr['tout_dep'] ?></option>
 						</select>
+						<button type="submit" class="btn"><?= $tr['appliquer'] ?></button>
 					</fieldset>
 				</form>
 			<?php } ?>
 
 			<table>
-    <thead>
-        <tr>
-            <th><?= $tr['station'] ?></th>
-            <th><?= $tr['adresse'] ?></th>
-            <th><?= $tr['ville'] ?></th>
-            <?php if (in_array('sp95', $carburants_choisis)) { ?><th>SP95</th><?php } ?>
-            <?php if (in_array('sp98', $carburants_choisis)) { ?><th>SP98</th><?php } ?>
-            <?php if (in_array('gazole', $carburants_choisis)) { ?><th>Gazole</th><?php } ?>
-            <?php if (in_array('e10', $carburants_choisis)) { ?><th>E10</th><?php } ?>
-            <?php if (in_array('gplc', $carburants_choisis)) { ?><th>GPL</th><?php } ?>
-            <?php if ($mode_geoloc) { ?><th><?= $tr['distance'] ?></th><?php } ?>
-            <?php if (isset($_GET['services'])) { ?><th><?= $lang === 'fr' ? 'Services' : 'Services' ?></th><?php } ?>
-            <?php if (!isset($_GET['services'])) { ?><th><?= $lang === 'fr' ? 'Détails' : 'Details' ?></th><?php } ?>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($stations as $station) { ?>
-			<tr id="station-<?= htmlspecialchars((string)($station['id'] ?? '')) ?>">
-	   			<td><?= htmlspecialchars($station['ensigne'] ?? 'N/A') ?></td>
-                <td><?= htmlspecialchars($station['adresse'] ?? 'N/A') ?></td>
-                <td><?= htmlspecialchars($station['ville'] ?? 'N/A') ?></td>
-                <?php if (in_array('sp95', $carburants_choisis)) { ?>
-                    <td><?= !empty($station['sp95_prix']) ? htmlspecialchars((string)$station['sp95_prix']) . ' €' : '-' ?></td>
-                <?php } ?>
-                <?php if (in_array('sp98', $carburants_choisis)) { ?>
-                    <td><?= !empty($station['sp98_prix']) ? htmlspecialchars((string)$station['sp98_prix']) . ' €' : '-' ?></td>
-                <?php } ?>
-                <?php if (in_array('gazole', $carburants_choisis)) { ?>
-                    <td><?= !empty($station['gazole_prix']) ? htmlspecialchars((string)$station['gazole_prix']) . ' €' : '-' ?></td>
-                <?php } ?>
-                <?php if (in_array('e10', $carburants_choisis)) { ?>
-                    <td><?= !empty($station['e10_prix']) ? htmlspecialchars((string)$station['e10_prix']) . ' €' : '-' ?></td>
-                <?php } ?>
-                <?php if (in_array('gplc', $carburants_choisis)) { ?>
-                    <td><?= !empty($station['gplc_prix']) ? htmlspecialchars((string)$station['gplc_prix']) . ' €' : '-' ?></td>
-                <?php } ?>
-                <?php if ($mode_geoloc) { ?>
-                    <td><?= ($station['distance_km'] < 9999.0) ? $station['distance_km'] . ' km' : 'N/A' ?></td>
-                <?php } ?>
-                <?php if (isset($_GET['services'])) { ?>
-                    <td>
-                        <?php if (!empty($station['services_service']) && is_array($station['services_service'])) { ?>
-                            <ul>
-                                <?php foreach ($station['services_service'] as $service) { ?>
-                                    <li><?= htmlspecialchars(trim($service)) ?></li>
-                                <?php } ?>
-                            </ul>
-                        <?php } elseif (!empty($station['services_service'])) { ?>
-                            <ul>
-                                <?php foreach (explode('|', $station['services_service']) as $service) { ?>
-                                    <li><?= htmlspecialchars(trim($service)) ?></li>
-                                <?php } ?>
-                            </ul>
-                        <?php } else { ?>
-                            <p>-</p>
-                        <?php } ?>
-                    </td>
-                <?php } ?>
-                <?php if (!isset($_GET['services'])) { ?>
-					<td>
-						<a href="resultats.php?departement=<?= urlencode($departement) ?>&ville=<?= urlencode($ville) ?>&style=<?= $styleUrl ?>&lang=<?= $lang ?>&voir_station=<?= htmlspecialchars((string)($station['id'] ?? '')) ?><?php foreach ($carburants_choisis as $c) { echo '&carburants[]=' . urlencode($c); } ?>#station-<?= htmlspecialchars((string)($station['id'] ?? '')) ?>" class="btn">
-							<?= $lang === 'fr' ? 'Services' : 'Services' ?>
-						</a>
-					</td>
-				<?php } ?>
-            </tr>
-            <?php
-            $id_station = (string)($station['id'] ?? '');
-			if (!empty($id_station) && isset($_GET['voir_station']) && $_GET['voir_station'] === $id_station) { ?>
-                <tr>
-                    <td colspan="10">
-                        <?php if (!empty($station['services_service']) && is_array($station['services_service'])) { ?>
-                            <ul>
-                                <?php foreach ($station['services_service'] as $service) { ?>
-                                    <li><?= htmlspecialchars(trim($service)) ?></li>
-                                <?php } ?>
-                            </ul>
-                        <?php } else { ?>
-                            <p><?= $lang === 'fr' ? 'Aucun service disponible' : 'No service available' ?></p>
-                        <?php } ?>
-                    </td>
-                </tr>
-            <?php } ?>
-        <?php } ?>
-    </tbody>
-</table>
+				<thead>
+					<tr>
+						<th><?= $tr['station'] ?></th>
+						<th><?= $tr['adresse'] ?></th>
+						<th><?= $tr['ville'] ?></th>
+						<?php if (in_array('sp95', $carburants_choisis)) { ?><th>SP95</th><?php } ?>
+						<?php if (in_array('sp98', $carburants_choisis)) { ?><th>SP98</th><?php } ?>
+						<?php if (in_array('gazole', $carburants_choisis)) { ?><th>Gazole</th><?php } ?>
+						<?php if (in_array('e10', $carburants_choisis)) { ?><th>E10</th><?php } ?>
+						<?php if (in_array('gplc', $carburants_choisis)) { ?><th>GPL</th><?php } ?>
+						<?php if ($mode_geoloc) { ?><th><?= $tr['distance'] ?></th><?php } ?>
+						<?php if (isset($_GET['services'])) { ?><th><?= $lang === 'fr' ? 'Services' : 'Services' ?></th><?php } ?>
+						<?php if (!isset($_GET['services'])) { ?><th><?= $lang === 'fr' ? 'Détails' : 'Details' ?></th><?php } ?>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($stations as $station) { ?>
+						<tr id="station-<?= htmlspecialchars((string)($station['id'] ?? '')) ?>">
+							<td><?= htmlspecialchars($station['ensigne'] ?? 'N/A') ?></td>
+							<td><?= htmlspecialchars($station['adresse'] ?? 'N/A') ?></td>
+							<td><?= htmlspecialchars($station['ville'] ?? 'N/A') ?></td>
+							<?php if (in_array('sp95', $carburants_choisis)) { ?>
+								<td><?= !empty($station['sp95_prix']) ? htmlspecialchars((string)$station['sp95_prix']) . ' €' : '-' ?></td>
+							<?php } ?>
+							<?php if (in_array('sp98', $carburants_choisis)) { ?>
+								<td><?= !empty($station['sp98_prix']) ? htmlspecialchars((string)$station['sp98_prix']) . ' €' : '-' ?></td>
+							<?php } ?>
+							<?php if (in_array('gazole', $carburants_choisis)) { ?>
+								<td><?= !empty($station['gazole_prix']) ? htmlspecialchars((string)$station['gazole_prix']) . ' €' : '-' ?></td>
+							<?php } ?>
+							<?php if (in_array('e10', $carburants_choisis)) { ?>
+								<td><?= !empty($station['e10_prix']) ? htmlspecialchars((string)$station['e10_prix']) . ' €' : '-' ?></td>
+							<?php } ?>
+							<?php if (in_array('gplc', $carburants_choisis)) { ?>
+								<td><?= !empty($station['gplc_prix']) ? htmlspecialchars((string)$station['gplc_prix']) . ' €' : '-' ?></td>
+							<?php } ?>
+							<?php if ($mode_geoloc) { ?>
+								<td><?= ($station['distance_km'] < 9999.0) ? $station['distance_km'] . ' km' : 'N/A' ?></td>
+							<?php } ?>
+							<?php if (isset($_GET['services'])) { ?>
+								<td>
+									<?php if (!empty($station['services_service']) && is_array($station['services_service'])) { ?>
+										<ul>
+											<?php foreach ($station['services_service'] as $service) { ?>
+												<li><?= htmlspecialchars(trim($service)) ?></li>
+											<?php } ?>
+										</ul>
+									<?php } elseif (!empty($station['services_service'])) { ?>
+										<ul>
+											<?php foreach (explode('|', $station['services_service']) as $service) { ?>
+												<li><?= htmlspecialchars(trim($service)) ?></li>
+											<?php } ?>
+										</ul>
+									<?php } else { ?>
+										<p>-</p>
+									<?php } ?>
+								</td>
+							<?php } ?>
+							<?php if (!isset($_GET['services'])) { ?>
+								<td>
+									<a href="resultats.php?departement=<?= urlencode($departement) ?>&ville=<?= urlencode($ville) ?>&style=<?= $styleUrl ?>&lang=<?= $lang ?>&voir_station=<?= htmlspecialchars((string)($station['id'] ?? '')) ?><?php foreach ($carburants_choisis as $c) {
+																																																														echo '&carburants[]=' . urlencode($c);
+																																																													} ?>#station-<?= htmlspecialchars((string)($station['id'] ?? '')) ?>" class="btn">
+										<?= $lang === 'fr' ? 'Services' : 'Services' ?>
+									</a>
+								</td>
+							<?php } ?>
+						</tr>
+						<?php
+						$id_station = (string)($station['id'] ?? '');
+						if (!empty($id_station) && isset($_GET['voir_station']) && $_GET['voir_station'] === $id_station) { ?>
+							<tr>
+								<td colspan="10">
+									<?php if (!empty($station['services_service']) && is_array($station['services_service'])) { ?>
+										<ul>
+											<?php foreach ($station['services_service'] as $service) { ?>
+												<li><?= htmlspecialchars(trim($service)) ?></li>
+											<?php } ?>
+										</ul>
+									<?php } else { ?>
+										<p><?= $lang === 'fr' ? 'Aucun service disponible' : 'No service available' ?></p>
+									<?php } ?>
+								</td>
+							</tr>
+						<?php } ?>
+					<?php } ?>
+				</tbody>
+			</table>
 		</div>
 
 	<?php } ?>

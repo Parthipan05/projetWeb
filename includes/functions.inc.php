@@ -117,13 +117,6 @@ function lire_statistiques(string $fichier): array
 }
 
 /**
- * @brief Lit le fichier CSV des communes et retourne la liste des villes
- *        d'un département donné, triée alphabétiquement.
- *
- * @param string $departement Code du département (ex: "95", "2A").
- * @return array Tableau trié des noms de communes.
- */
-/**
  * @brief Récupère la liste des villes d'un département depuis l'API carburants.
  *
  * @param string $departement Code du département.
@@ -283,7 +276,7 @@ function lire_statistiques_villes(string $fichier): array
  *
  * @return array|null Tableau [departement, ville, date] ou null si absent/invalide.
  */
-function get_derniere_consultation(): ?array
+function get_derniere_consultation()
 {
 	if (isset($_COOKIE['derniere_consultation']) && !empty($_COOKIE['derniere_consultation'])) {
 		$data = explode('|', $_COOKIE['derniere_consultation']);
@@ -304,33 +297,63 @@ function get_derniere_consultation(): ?array
  */
 function calculer_moyennes_nationales(): array
 {
-    $url = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/"
-        . "prix-des-carburants-en-france-flux-instantane-v2/records?"
-        . "select=sp95_prix,gazole_prix,sp98_prix,e10_prix"
-        . "&limit=100"
-        . "&timezone=Europe%2FParis";
+	$url = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/"
+		. "prix-des-carburants-en-france-flux-instantane-v2/records?"
+		. "select=sp95_prix,gazole_prix,sp98_prix,e10_prix"
+		. "&limit=100"
+		. "&timezone=Europe%2FParis";
 
-    $json = @file_get_contents($url);
-    $donnees = json_decode($json, true);
+	$json = @file_get_contents($url);
+	$donnees = json_decode($json, true);
 
-    $prix_sp95 = [];
-    $prix_gazole = [];
-    $prix_sp98 = [];
-    $prix_e10 = [];
+	$prix_sp95 = [];
+	$prix_gazole = [];
+	$prix_sp98 = [];
+	$prix_e10 = [];
 
-    if ($donnees !== null && isset($donnees['results'])) {
-        foreach ($donnees['results'] as $station) {
-            if (!empty($station['sp95_prix']))   $prix_sp95[]   = (float)$station['sp95_prix'];
-            if (!empty($station['gazole_prix'])) $prix_gazole[] = (float)$station['gazole_prix'];
-            if (!empty($station['sp98_prix']))   $prix_sp98[]   = (float)$station['sp98_prix'];
-            if (!empty($station['e10_prix']))    $prix_e10[]    = (float)$station['e10_prix'];
-        }
-    }
+	if ($donnees !== null && isset($donnees['results'])) {
+		foreach ($donnees['results'] as $station) {
+			if (!empty($station['sp95_prix']))   $prix_sp95[]   = (float)$station['sp95_prix'];
+			if (!empty($station['gazole_prix'])) $prix_gazole[] = (float)$station['gazole_prix'];
+			if (!empty($station['sp98_prix']))   $prix_sp98[]   = (float)$station['sp98_prix'];
+			if (!empty($station['e10_prix']))    $prix_e10[]    = (float)$station['e10_prix'];
+		}
+	}
 
-    return [
-        'sp95' => !empty($prix_sp95) ? round(array_sum($prix_sp95) / count($prix_sp95), 3) : null,
-        'gazole' => !empty($prix_gazole) ? round(array_sum($prix_gazole) / count($prix_gazole), 3) : null,
-        'sp98' => !empty($prix_sp98) ? round(array_sum($prix_sp98) / count($prix_sp98), 3) : null,
-        'e10' => !empty($prix_e10) ? round(array_sum($prix_e10) / count($prix_e10), 3) : null,
-    ];
+	return [
+		'sp95' => !empty($prix_sp95) ? round(array_sum($prix_sp95) / count($prix_sp95), 3) : null,
+		'gazole' => !empty($prix_gazole) ? round(array_sum($prix_gazole) / count($prix_gazole), 3) : null,
+		'sp98' => !empty($prix_sp98) ? round(array_sum($prix_sp98) / count($prix_sp98), 3) : null,
+		'e10' => !empty($prix_e10) ? round(array_sum($prix_e10) / count($prix_e10), 3) : null,
+	];
+}
+
+/**
+ * @brief Récupère le contenu d'une URL avec un système de cache fichier.
+ * Si le fichier cache existe et est récent, on le relit.
+ * Sinon, on appelle l'URL et on sauvegarde le résultat.
+ *
+ * @param string $url         URL à appeler.
+ * @param string $fichier_cache Chemin du fichier cache local.
+ * @param int    $duree        Durée de validité du cache en secondes.
+ * @return string|false        Contenu récupéré ou false si erreur.
+ */
+function recuperer_avec_cache(string $url, string $fichier_cache, int $duree): string|false
+{
+	// Si le fichier cache existe ET n'est pas expiré
+	if (file_exists($fichier_cache)) {
+		$age = time() - filemtime($fichier_cache);
+		if ($age < $duree) {
+			// On relit le cache local
+			return file_get_contents($fichier_cache);
+		}
+	}
+
+	// Sinon on appelle l'API
+	$contenu = @file_get_contents($url);
+	if ($contenu !== false) {
+		// On sauvegarde dans le cache
+		file_put_contents($fichier_cache, $contenu);
+	}
+	return $contenu;
 }

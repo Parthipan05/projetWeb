@@ -168,7 +168,7 @@ if ($derniere !== null) {
 				<legend><?= $tr['choisissez'] ?></legend>
 
 				<label for="departement"><?= $tr['departement'] ?> :</label>
-				<select name="departement" id="departement" onchange="this.form.submit()">
+				<select name="departement" id="departement">
 					<option value=""><?= $tr['select_dep'] ?></option>
 					<?php foreach ($departements[$region_selectionnee] as $dep) { ?>
 						<option value="<?= htmlspecialchars($dep['code']) ?>"
@@ -178,19 +178,21 @@ if ($derniere !== null) {
 					<?php } ?>
 				</select>
 
-				<label for="ville"><?= $tr['ville'] ?> :</label>
-				<select name="ville" id="ville" <?= empty($departement_selectionne) ? 'disabled' : '' ?> required>
-					<option value=""><?= $tr['select_ville'] ?></option>
-					<?php foreach ($villes as $nom_ville) { ?>
-						<option value="<?= htmlspecialchars($nom_ville) ?>">
-							<?= htmlspecialchars($nom_ville) ?>
-						</option>
-					<?php } ?>
-				</select>
+				<button type="submit" class="btn"><?= $tr['choisissez'] ?></button>
 
-				<button type="submit" class="btn" <?= empty($departement_selectionne) ? 'disabled' : '' ?>>
-					<?= $tr['voir_btn'] ?>
-				</button>
+				<?php if (!empty($departement_selectionne) && !empty($villes)) { ?>
+					<label for="ville"><?= $tr['ville'] ?> :</label>
+					<select name="ville" id="ville" required>
+						<option value=""><?= $tr['select_ville'] ?></option>
+						<?php foreach ($villes as $nom_ville) { ?>
+							<option value="<?= htmlspecialchars($nom_ville) ?>">
+								<?= htmlspecialchars($nom_ville) ?>
+							</option>
+						<?php } ?>
+					</select>
+					<button type="submit" class="btn"><?= $tr['voir_btn'] ?></button>
+				<?php } ?>
+
 			</fieldset>
 		</form>
 	</section>

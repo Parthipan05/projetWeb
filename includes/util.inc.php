@@ -1,17 +1,21 @@
 <?php
 function get_navigateur(): string
 {
-    $agent = $_SERVER['HTTP_USER_AGENT'];
+    if (isset($_SERVER['HTTP_USER_AGENT'])) {
+        $agent = $_SERVER['HTTP_USER_AGENT'];
+    } else {
+        $agent = 'inconnu';
+    }
 
-    if (str_contains($agent, 'Chrome')) {
+    if (strpos($agent, 'Chrome') !== false) {
         return "Google Chrome";
-    } elseif (str_contains($agent, 'Firefox')) {
+    } elseif (strpos($agent, 'Firefox') !== false) {
         return "Mozilla Firefox";
-    } elseif (str_contains($agent, 'Safari')) {
+    } elseif (strpos($agent, 'Safari') !== false) {
         return "Safari";
-    } elseif (str_contains($agent, 'Opera')) {
+    } elseif (strpos($agent, 'Opera') !== false) {
         return "Opera";
     } else {
-        return $agent;
+        return htmlspecialchars($agent);
     }
 }

@@ -32,7 +32,7 @@
 
 /* --- Corps --- */
 body {
-    background-color: var(--couleur-fond);
+    background-color: #ffffff;
     color: var(--couleur-texte);
     font-family: var(--police-principale);
     font-size: 16px;
@@ -134,6 +134,8 @@ h1 {
 h2 {
     font-size: 1.3em;
     color: var(--couleur-primaire);
+    border-left: 5px solid var(--couleur-accent);
+    padding-left: 15px;
     margin-bottom: 15px;
     margin-top: 0;
 }
@@ -163,13 +165,21 @@ a:hover {
 
 /* --- Sections --- */
 section {
-    background-color: var(--couleur-carte);
-    border: 1px solid var(--couleur-bordure);
-    border-radius: var(--rayon-bordure);
+    background-color: transparent;
     padding: 25px 30px;
     margin-bottom: 25px;
-    box-shadow: var(--ombre);
+    border-radius: var(--rayon-bordure);
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
 }
+
+section:hover {
+    background-color: #ffffff;
+    border: 1px solid var(--couleur-bordure);
+    box-shadow: 0 10px 20px rgba(26, 60, 110, 0.08);
+    transform: translateY(-3px);
+}
+
 
 /* --- Listes --- */
 ul, ol {
@@ -187,8 +197,6 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
-    border-radius: var(--rayon-bordure);
-    overflow: hidden;
 }
 
 thead {
@@ -228,9 +236,10 @@ form {
 }
 
 fieldset {
-    border: 1px solid var(--couleur-bordure);
-    border-radius: var(--rayon-bordure);
-    padding: 15px 20px;
+    border: none;
+    border-top: 2px solid var(--couleur-accent);
+    border-radius: 0;
+    padding: 15px 0;
 }
 
 legend {
@@ -315,6 +324,19 @@ figcaption {
     font-style: italic;
 }
 
+figure img {
+    max-width: 100%;
+    border-radius: var(--rayon-bordure);
+    border: 1px solid var(--couleur-bordure);
+    box-shadow: var(--ombre);
+    transition: transform 0.3s ease;
+}
+
+figure img:hover {
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
 /* --- Séparateur --- */
 hr {
     border: none;
@@ -348,20 +370,18 @@ footer p {
 
 /* --- Histogramme stats --- */
 .histogramme {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    width: 100%;
 }
 
 .barre-container {
     display: flex;
     align-items: center;
     gap: 15px;
+    width: 100%;
 }
 
 .barre-label {
-    min-width: 80px;
+    min-width: 120px;
     font-size: 0.9em;
     color: var(--couleur-texte-discret);
     text-align: right;
@@ -429,3 +449,8 @@ footer p {
     font-weight: bold;
     color: #333;
 }
+
+.prix-bas    { background-color: #d4edda; text-align: center; }
+.prix-moyen  { background-color: #fff3cd; text-align: center; }
+.prix-eleve  { background-color: #f8d7da; text-align: center; }
+.prix-actuel { font-weight: bold; }
