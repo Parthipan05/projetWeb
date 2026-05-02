@@ -64,6 +64,10 @@ p, li, td, label {
     color: #eaeaea !important;
 }
 
+.cellule-prix {
+    color: #333 !important;
+}
+
 input, select, textarea {
     background-color: #1a1a2e !important;
     border: 1px solid #2a2a4a !important;

@@ -297,3 +297,40 @@ function get_derniere_consultation(): ?array
 	}
 	return null;
 }
+
+/**
+ * @brief Calcule les prix moyens nationaux des carburants depuis l'API gouvernementale.
+ * @return array Tableau associatif [carburant => prix_moyen] ou null si indisponible.
+ */
+function calculer_moyennes_nationales(): array
+{
+    $url = "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/"
+        . "prix-des-carburants-en-france-flux-instantane-v2/records?"
+        . "select=sp95_prix,gazole_prix,sp98_prix,e10_prix"
+        . "&limit=100"
+        . "&timezone=Europe%2FParis";
+
+    $json = @file_get_contents($url);
+    $donnees = json_decode($json, true);
+
+    $prix_sp95 = [];
+    $prix_gazole = [];
+    $prix_sp98 = [];
+    $prix_e10 = [];
+
+    if ($donnees !== null && isset($donnees['results'])) {
+        foreach ($donnees['results'] as $station) {
+            if (!empty($station['sp95_prix']))   $prix_sp95[]   = (float)$station['sp95_prix'];
+            if (!empty($station['gazole_prix'])) $prix_gazole[] = (float)$station['gazole_prix'];
+            if (!empty($station['sp98_prix']))   $prix_sp98[]   = (float)$station['sp98_prix'];
+            if (!empty($station['e10_prix']))    $prix_e10[]    = (float)$station['e10_prix'];
+        }
+    }
+
+    return [
+        'sp95' => !empty($prix_sp95) ? round(array_sum($prix_sp95) / count($prix_sp95), 3) : null,
+        'gazole' => !empty($prix_gazole) ? round(array_sum($prix_gazole) / count($prix_gazole), 3) : null,
+        'sp98' => !empty($prix_sp98) ? round(array_sum($prix_sp98) / count($prix_sp98), 3) : null,
+        'e10' => !empty($prix_e10) ? round(array_sum($prix_e10) / count($prix_e10), 3) : null,
+    ];
+}
