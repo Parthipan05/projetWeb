@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['calculer_5fdistance_0',['calculer_distance',['../functions_8inc_8php.html#a6adc684bbead5284f622088039f44398',1,'functions.inc.php']]],
-  ['calculer_5fmoyennes_5fnationales_1',['calculer_moyennes_nationales',['../functions_8inc_8php.html#a34919f1508f50ea80605776689735e33',1,'functions.inc.php']]],
-  ['confidentialite_2ephp_2',['confidentialite.php',['../confidentialite_8php.html',1,'']]]
+  ['aide_2ephp_0',['aide.php',['../aide_8php.html',1,'']]],
+  ['apropos_2ephp_1',['apropos.php',['../apropos_8php.html',1,'']]],
+  ['auteurs_2',['Auteurs',['../md_readme.html#autotoc_md1',1,'']]]
 ];

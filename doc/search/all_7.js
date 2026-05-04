@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['incrementer_5fhits_0',['incrementer_hits',['../functions_8inc_8php.html#a254db296528cee7f2193357635980ba3',1,'functions.inc.php']]],
-  ['index_2ephp_1',['index.php',['../index_8php.html',1,'']]]
+  ['readme_2emd_0',['readme.md',['../readme_8md.html',1,'']]],
+  ['resultats_2ephp_1',['resultats.php',['../resultats_8php.html',1,'']]]
 ];
