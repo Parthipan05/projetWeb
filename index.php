@@ -28,29 +28,29 @@ if (!empty($_GET['departement']) && !empty($_GET['ville'])) {
 	exit;
 }
 
-require_once("./includes/header.inc.php"); // $lang est défini ici
-require_once("./includes/traductions.inc.php"); // APRÈS header !
+require_once("./includes/header.inc.php"); 
+require_once("./includes/traductions.inc.php"); 
 // Lecture des fichiers CSV régions et départements
 $regions      = lire_regions("./data/v_region_2024.csv");
 $departements = lire_departements("./data/v_departement_2024.csv");
 
-// --- Géolocalisation automatique par IP (API ipinfo.io - format JSON) ---
-$ip_visiteur     = $_SERVER['REMOTE_ADDR'] ?? '193.54.115.18';
-$url_geo         = "https://ipinfo.io/" . $ip_visiteur . "/geo";
+// Géolocalisation automatique par IP (API ipinfo.io - format JSON)
+$ip_visiteur = $_SERVER['REMOTE_ADDR'] ?? '193.54.115.18';
+$url_geo = "https://ipinfo.io/" . $ip_visiteur . "/geo";
 $lat_utilisateur = 0.0;
 $lon_utilisateur = 0.0;
-$ville_geolocalisee  = "";
+$ville_geolocalisee = "";
 $region_geolocalisee = "";
-$dep_geolocalisee    = "";
+$dep_geolocalisee = "";
 
 $contenu_geo = @file_get_contents($url_geo);
 if ($contenu_geo !== false) {
 	$geo = json_decode($contenu_geo, true);
 	if (!empty($geo['city']))   $ville_geolocalisee  = $geo['city'];
 	if (!empty($geo['region'])) $region_geolocalisee = $geo['region'];
-	// Ex: "95000" → les 2 premiers caractères = "95" (code département)
+	// les 2 premiers caractères = "95" (code département)
 	if (!empty($geo['postal'])) $dep_geolocalisee = substr($geo['postal'], 0, 2);
-	// Ex: "49.0389,2.0781" → on sépare latitude et longitude
+	// Ex: "49.0389,2.0781" ,on sépare latitude et longitude
 	if (!empty($geo['loc'])) {
 		$coords = explode(',', $geo['loc']);
 		$lat_utilisateur = (float)$coords[0];
@@ -58,19 +58,19 @@ if ($contenu_geo !== false) {
 	}
 }
 
-// --- Récupération de la région sélectionnée via GET ---
+// Récupération de la région sélectionnée via GET
 $region_selectionnee = "";
 if (isset($_GET['region']) && !empty($_GET['region'])) {
 	$region_selectionnee = htmlspecialchars($_GET['region']);
 }
 
-// --- Récupération du département sélectionné via GET ---
+// Récupération du département sélectionné via GET
 $departement_selectionne = "";
 if (isset($_GET['departement']) && !empty($_GET['departement'])) {
 	$departement_selectionne = htmlspecialchars($_GET['departement']);
 }
 
-// --- Chargement des villes si un département est sélectionné ---
+// Chargement des villes si un département est sélectionné
 $villes = [];
 if (!empty($departement_selectionne)) {
 	$villes = lire_villes_par_departement($departement_selectionne);

@@ -12,7 +12,7 @@
 
 require_once("./includes/util.inc.php");
 
-// --- Chemin du site pour les cookies (4ème paramètre obligatoire) ---
+// Chemin du site pour les cookies
 define('COOKIE_PATH', '/');
 define('COOKIE_DUREE', time() + (30 * 24 * 3600)); // 30 jours
 

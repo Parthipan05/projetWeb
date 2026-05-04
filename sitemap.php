@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-$titre       = "Plan du site";
+$titre = "Plan du site";
 $description = "Plan du site StationFinder - toutes les pages disponibles";
 
 require_once("./includes/functions.inc.php");

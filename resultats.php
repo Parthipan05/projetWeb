@@ -14,10 +14,10 @@ declare(strict_types=1);
 $titre = "Résultats";
 $description = "Stations-service et prix des carburants";
 
-// --- Récupération des coordonnées GPS (mode géolocalisation) ---
+// Récupération des coordonnées GPS (mode géolocalisation)
 $lat_utilisateur = 0.0;
 $lon_utilisateur = 0.0;
-$mode_geoloc     = false;
+$mode_geoloc = false;
 
 if (
 	isset($_GET['lat']) && isset($_GET['lon'])
@@ -33,7 +33,7 @@ if (
 	}
 }
 
-// --- Rayon choisi par l'utilisateur (en km), 5 km par défaut ---
+// Rayon choisi par l'utilisateur (en km), 5 km par défaut
 $rayon_km = 5;
 if (isset($_GET['rayon']) && !empty($_GET['rayon'])) {
 	$rayon_km = (int)$_GET['rayon'];
@@ -42,7 +42,7 @@ if (isset($_GET['rayon']) && !empty($_GET['rayon'])) {
 	}
 }
 
-// --- Cookie dernière consultation (avant tout affichage HTML) ---
+// Cookie dernière consultation (avant tout affichage HTML)
 if (isset($_GET['departement']) && !empty($_GET['departement'])) {
 	$dep_cookie   = htmlspecialchars($_GET['departement']);
 	$ville_cookie = htmlspecialchars($_GET['ville'] ?? '');
@@ -56,7 +56,7 @@ if (isset($_GET['departement']) && !empty($_GET['departement'])) {
 
 require_once("./includes/functions.inc.php");
 
-// --- Enregistrement de la consultation dans le CSV ---
+// Enregistrement de la consultation dans le CSV
 if (!empty($_GET['departement'])) {
 	enregistrer_consultation(
 		htmlspecialchars($_GET['departement']),
@@ -66,10 +66,10 @@ if (!empty($_GET['departement'])) {
 
 require_once("./includes/header.inc.php");
 require_once("./includes/traductions.inc.php");
-// --- Récupération et sécurisation des paramètres GET ---
+// Récupération et sécurisation des paramètres GET
 $departement = "";
-$region      = "";
-$ville       = "";
+$region = "";
+$ville = "";
 
 if (isset($_GET['departement']) && !empty($_GET['departement'])) {
 	$departement = htmlspecialchars($_GET['departement']);
@@ -81,7 +81,7 @@ if (isset($_GET['ville']) && !empty($_GET['ville'])) {
 	$ville = htmlspecialchars($_GET['ville']);
 }
 
-// --- Vérification qu'un département ou une ville a bien été sélectionné ---
+// Vérification qu'un département ou une ville a bien été sélectionné
 if (empty($departement) && empty($ville) && !$mode_geoloc) {
 	echo "<p>" . $tr['select_dep'] . "</p>";
 	require_once("./includes/footer.inc.php");
@@ -100,7 +100,7 @@ if (empty($departement) && empty($ville) && !$mode_geoloc) {
 </h1>
 
 <?php
-// --- Lecture et affichage du cookie dernière consultation ---
+// Lecture et affichage du cookie dernière consultation
 $derniere = get_derniere_consultation();
 if ($derniere !== null) {
 	$href = 'resultats.php?departement=' . urlencode($derniere['departement'])
@@ -118,7 +118,7 @@ if ($derniere !== null) {
 ?>
 <div>
 	<?php
-	// --- Appel de l'API gouvernementale (format JSON) ---
+	// Appel de l'API gouvernementale (format JSON)
 	if ($mode_geoloc && empty($departement)) {
 		$filtre = "dist(geo_point_2d%2C%22" . $lat_utilisateur . "%2C" . $lon_utilisateur . "%22)%3C%3D20000";
 	} elseif (!empty($ville) && !empty($departement)) {
@@ -166,7 +166,7 @@ if ($derniere !== null) {
 		$stations = $donnees['results'];
 	}
 
-	// --- Le traitement des stations se fait ICI pour tous les cas ---
+	// Le traitement des stations se fait ICI pour tous les cas
 	if (!empty($stations)) {
 		// Carburants choisis par l'utilisateur, tous par défaut
 		if (isset($_GET['carburants']) && !empty($_GET['carburants'])) {
@@ -181,7 +181,7 @@ if ($derniere !== null) {
 		} else {
 			$tri = '';
 		}
-		// --- Mode géolocalisation ---
+		// Mode géolocalisation
 		if ($mode_geoloc) {
 			foreach ($stations as &$station) {
 				$lat_station = isset($station['geom']['lat']) ? (float)$station['geom']['lat'] : 0.0;
@@ -206,7 +206,7 @@ if ($derniere !== null) {
 				$stations = array_values($stations);
 			}
 
-			// Tri par distance croissante (tri à bulles simple)
+			// Tri par distance croissante (tri à bulles)
 			$nb = count($stations);
 			for ($i = 0; $i < $nb - 1; $i++) {
 				for ($j = 0; $j < $nb - $i - 1; $j++) {
@@ -218,7 +218,7 @@ if ($derniere !== null) {
 				}
 			}
 
-			// --- Mode normal : tri par prix ---
+			//  Mode normal : tri par prix 
 		} elseif ($tri === 'asc' || $tri === 'desc') {
 			// Tri simple : on extrait le prix minimum de chaque station
 			$prix_min = [];
@@ -244,7 +244,7 @@ if ($derniere !== null) {
 			$stations = $stations_triees;
 		}
 
-		// --- Filtre carburants : on garde seulement les stations qui ont au moins un prix ---
+		// Filtre carburants : on garde seulement les stations qui ont au moins un prix
 		$stations_filtrees = [];
 		foreach ($stations as $station) {
 			foreach ($carburants_choisis as $c) {

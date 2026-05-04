@@ -1,11 +1,11 @@
-/* ============================================================
+/* 
    StationFinder - Feuille de style principale
    Auteurs : PIRABAKARAN Parthipan & HANANE Sanaa
    Date : 2026
    Description : Charte graphique StationFinder
-   ============================================================ */
+    */
 
-/* --- Variables CSS --- */
+/* Variables CSS */
 :root {
     --couleur-fond: #f0f4f8;
     --couleur-fond-secondaire: #ffffff;
@@ -23,14 +23,12 @@
     --ombre: 0 2px 12px rgba(26,60,110,0.08);
 }
 
-/* --- Reset --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* --- Corps --- */
 body {
     background-color: #ffffff;
     color: var(--couleur-texte);
@@ -42,7 +40,6 @@ body {
     flex-direction: column;
 }
 
-/* --- Header --- */
 .site-header {
     background-color: #ffffff;
     border-bottom: 3px solid var(--couleur-accent);
@@ -61,7 +58,6 @@ body {
     background: transparent;
 }
 
-/* --- Menu navigation --- */
 .menu-principal ul {
     list-style: none;
     display: flex;
@@ -84,7 +80,7 @@ body {
 }
 
 
-/* --- Barre options --- */
+/* Barre options */
 .barre-options {
     background-color: var(--couleur-secondaire);
     padding: 6px 30px;
@@ -114,7 +110,6 @@ body {
     display: block;
 }
 
-/* --- Conteneur --- */
 .container {
     max-width: 1100px;
     margin: 30px auto;
@@ -122,7 +117,6 @@ body {
     flex: 1;
 }
 
-/* --- Titres --- */
 h1 {
     font-size: 1.9em;
     color: var(--couleur-primaire);
@@ -145,13 +139,12 @@ h3 {
     color: #2d7a2d;
     margin-bottom: 10px;
 }
-/* --- Paragraphes --- */
 p {
     margin-bottom: 12px;
     color: var(--couleur-texte);
 }
 
-/* --- Liens --- */
+/* Liens */
 a {
     color: var(--couleur-lien);
     text-decoration: none;
@@ -162,7 +155,6 @@ a:hover {
     color: var(--couleur-accent);
 }
 
-/* --- Sections --- */
 section {
     background-color: transparent;
     padding: 25px 30px;
@@ -180,7 +172,6 @@ section:hover {
 }
 
 
-/* --- Listes --- */
 ul, ol {
     margin-left: 25px;
     margin-bottom: 12px;
@@ -191,7 +182,6 @@ ul li, ol li {
     color: var(--couleur-texte);
 }
 
-/* --- Tableaux --- */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -227,7 +217,7 @@ tr:hover {
     background-color: var(--couleur-secondaire);
 }
 
-/* --- Formulaires --- */
+/* Formulaires */
 form {
     display: flex;
     flex-direction: column;
@@ -283,7 +273,6 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 0 3px rgba(93,184,93,0.15);
 }
 
-/* --- Boutons --- */
 button, .btn {
    background-color: #2d7a2d;
     color: #fff;
@@ -303,7 +292,6 @@ button:hover, .btn:hover {
     transform: translateY(-1px);
 }
 
-/* --- Figures et images --- */
 figure {
     margin: 15px 0;
     text-align: center;
@@ -336,14 +324,13 @@ figure img:hover {
     cursor: pointer;
 }
 
-/* --- Séparateur --- */
+/*  Séparateur */
 hr {
     border: none;
     border-top: 2px solid var(--couleur-bordure);
     margin: 25px 0;
 }
 
-/* --- Footer --- */
 footer {
     background-color: var(--couleur-primaire);
     padding: 20px 30px;
@@ -366,7 +353,7 @@ footer p {
     margin-bottom: 5px;
 }
 
-/* --- Histogramme stats --- */
+/* Histogramme stats */
 .histogramme {
     width: 100%;
 }
@@ -401,12 +388,12 @@ footer p {
     white-space: nowrap;
 }
 
-/* --- Classes utilitaires --- */
+/* Classes utilitaires */
 .texte-centre  { text-align: center; }
 .texte-discret { color: #555555; font-size: 0.9em; }
 .marge-haut    { margin-top: 20px; }
 
-/* --- Flèche retour haut --- */
+/* Flèche retour en haut */
 .back-to-top {
     position: fixed;
     bottom: 30px;
@@ -432,7 +419,6 @@ footer p {
     text-decoration: none;
 }
 
-/* --- Légende tendances --- */
 .legende-tendances {
     display: flex;
     gap: 20px;
@@ -448,7 +434,20 @@ footer p {
     color: #000000;
 }
 
-.prix-bas    { background-color: #d4edda; text-align: center; }
-.prix-moyen  { background-color: #fff3cd; text-align: center; }
-.prix-eleve  { background-color: #f8d7da; text-align: center; }
-.prix-actuel { font-weight: bold; }
+.prix-bas { background-color: #d4edda;
+	text-align: center;
+}
+
+.prix-moyen {
+	background-color: #fff3cd;
+	text-align: center;
+}
+
+.prix-eleve {
+	background-color: #f8d7da;
+	text-align: center;
+}
+
+.prix-actuel { 
+	font-weight: bold;
+}

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-$titre       = "Aide";
+$titre = "Aide";
 $description = "Aide et guide d'utilisation de StationFinder";
 
 require_once("./includes/functions.inc.php");

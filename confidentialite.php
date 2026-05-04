@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-$titre       = "Confidentialité";
+$titre = "Confidentialité";
 $description = "Politique de confidentialité et gestion des cookies de StationFinder";
 
 require_once("./includes/functions.inc.php");

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-$titre       = "À propos";
+$titre = "À propos";
 $description = "À propos de StationFinder - Projet universitaire L2 Informatique";
 
 require_once("./includes/functions.inc.php");

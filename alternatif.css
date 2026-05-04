@@ -1,8 +1,8 @@
-/* ============================================================
+/* 
    StationFinder - Feuille de style alternative (mode nuit)
    Auteurs : PIRABAKARAN Parthipan & HANANE Sanaa
    Date : 2026
-   ============================================================ */
+    */
 
 /* On réutilise tout style.css via les variables CSS */
 @import url('style.css');
@@ -113,6 +113,15 @@ th {
     color: #ffffff !important;
 }
 
-.prix-bas    { background-color: #1a3a2a !important; color: #eaeaea !important; }
-.prix-moyen  { background-color: #3a3a1a !important; color: #eaeaea !important; }
-.prix-eleve  { background-color: #3a1a1a !important; color: #eaeaea !important; }
+.prix-bas { 
+	background-color: #1a3a2a !important;
+	color: #eaeaea !important;
+}
+
+.prix-moyen { background-color: #3a3a1a !important;
+	color: #eaeaea !important;
+}
+
+.prix-eleve { background-color: #3a1a1a !important;
+	color: #eaeaea !important;
+}

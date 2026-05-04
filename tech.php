@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-$titre       = "Page Tech";
+$titre = "Page Tech";
 $description = "Page technique - Film Ghibli et géolocalisation IP";
 
 require_once("./includes/functions.inc.php");

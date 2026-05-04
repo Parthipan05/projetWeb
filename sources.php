@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-$titre       = "Sources";
+$titre = "Sources";
 $description = "Sources des données et crédits de StationFinder";
 
 require_once("./includes/functions.inc.php");
