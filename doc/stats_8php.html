@@ -85,15 +85,15 @@ Variables</h2></td></tr>
 <tr class="memitem:a43e5b5a819fedbd12b8cf5421ba6985e" id="r_a43e5b5a819fedbd12b8cf5421ba6985e"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a43e5b5a819fedbd12b8cf5421ba6985e">$titre</a> = &quot;Statistiques&quot;</td></tr>
 <tr class="memitem:a87b032cba06009e3467abf1c8018d960" id="r_a87b032cba06009e3467abf1c8018d960"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a87b032cba06009e3467abf1c8018d960">$description</a> = &quot;Statistiques des consultations sur StationFinder&quot;</td></tr>
 <tr class="memitem:ae5fe2a150c78d77af42ea6b377ae4f9d" id="r_ae5fe2a150c78d77af42ea6b377ae4f9d"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ae5fe2a150c78d77af42ea6b377ae4f9d">$fichier_csv</a> = './data/consultations.csv'</td></tr>
-<tr class="memitem:a154bca41f6e78ea1b86c2d2741dea1d1" id="r_a154bca41f6e78ea1b86c2d2741dea1d1"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a154bca41f6e78ea1b86c2d2741dea1d1">$toutes_stats</a> = lire_statistiques($fichier_csv)</td></tr>
+<tr class="memitem:a154bca41f6e78ea1b86c2d2741dea1d1" id="r_a154bca41f6e78ea1b86c2d2741dea1d1"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a154bca41f6e78ea1b86c2d2741dea1d1">$toutes_stats</a> = <a class="el" href="functions_8inc_8php.html#a4e2fe96e1640b52a245c208ee22c8560">lire_statistiques</a>($fichier_csv)</td></tr>
 <tr class="memitem:ac61adefb58583938c9b820405ddfa018" id="r_ac61adefb58583938c9b820405ddfa018"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ac61adefb58583938c9b820405ddfa018">$stats</a> = array_slice($toutes_stats, 0, 5)</td></tr>
 <tr class="memitem:a241b818f48030b628685b2e5119c5624" id="r_a241b818f48030b628685b2e5119c5624"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a241b818f48030b628685b2e5119c5624">$total</a> = array_sum($toutes_stats)</td></tr>
 <tr class="memitem:a9fb747ef5633c244639185a7fe54f6b0" id="r_a9fb747ef5633c244639185a7fe54f6b0"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a9fb747ef5633c244639185a7fe54f6b0">$max</a> = !empty($stats) ? max($stats) : 1</td></tr>
-<tr class="memitem:aa9d4c8d9a9f72814cea961c052e3fb64" id="r_aa9d4c8d9a9f72814cea961c052e3fb64"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aa9d4c8d9a9f72814cea961c052e3fb64">$toutes_stats_villes</a> = lire_statistiques_villes($fichier_csv)</td></tr>
+<tr class="memitem:aa9d4c8d9a9f72814cea961c052e3fb64" id="r_aa9d4c8d9a9f72814cea961c052e3fb64"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aa9d4c8d9a9f72814cea961c052e3fb64">$toutes_stats_villes</a> = <a class="el" href="functions_8inc_8php.html#a9f040ad08dc8d17f4cc8b7588185c07a">lire_statistiques_villes</a>($fichier_csv)</td></tr>
 <tr class="memitem:abf103b029c143704cfc4f5f681f2fd99" id="r_abf103b029c143704cfc4f5f681f2fd99"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#abf103b029c143704cfc4f5f681f2fd99">$stats_villes</a> = array_slice($toutes_stats_villes, 0, 5)</td></tr>
 <tr class="memitem:a481394458b044bc7f8d4273a1743b94c" id="r_a481394458b044bc7f8d4273a1743b94c"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a481394458b044bc7f8d4273a1743b94c">$max_villes</a> = !empty($stats_villes) ? max($stats_villes) : 1</td></tr>
-<tr class="memitem:ab42c80c7ea5ea985ed31d518aba1d28e" id="r_ab42c80c7ea5ea985ed31d518aba1d28e"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab42c80c7ea5ea985ed31d518aba1d28e">$moyennes</a> = calculer_moyennes_nationales()</td></tr>
-<tr class="memitem:a2e1f3d2a7b03202e4e5fac21b9cb0df0" id="r_a2e1f3d2a7b03202e4e5fac21b9cb0df0"><td class="memItemLeft"><a class="el" href="index_8php.html#ab3f0cbd6c8a413da3747078785141b05">if</a>(empty( $stats)) <a class="el" href="resultats_8php.html#a4d5758060af752155400a8bcb1ca41cd">else</a> <a class="el" href="#a666e2a4798fcb4b2c24f3079e7faae9b">foreach</a>($stats as $dep=&gt; $nb) <a class="el" href="index_8php.html#ab3f0cbd6c8a413da3747078785141b05">if</a>(empty( $stats_villes)) <a class="el" href="resultats_8php.html#a4d5758060af752155400a8bcb1ca41cd">else</a> <a class="el" href="#a666e2a4798fcb4b2c24f3079e7faae9b">foreach</a>($stats_villes as $ville=&gt; $nb)&#160;</td><td class="memItemRight"><a class="el" href="#a2e1f3d2a7b03202e4e5fac21b9cb0df0">$historique</a></td></tr>
+<tr class="memitem:ab42c80c7ea5ea985ed31d518aba1d28e" id="r_ab42c80c7ea5ea985ed31d518aba1d28e"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab42c80c7ea5ea985ed31d518aba1d28e">$moyennes</a> = <a class="el" href="functions_8inc_8php.html#a34919f1508f50ea80605776689735e33">calculer_moyennes_nationales</a>()</td></tr>
+<tr class="memitem:a2e1f3d2a7b03202e4e5fac21b9cb0df0" id="r_a2e1f3d2a7b03202e4e5fac21b9cb0df0"><td class="memItemLeft"><a class="el" href="index_8php.html#ab3f0cbd6c8a413da3747078785141b05">if</a>(empty( $stats)) <a class="el" href="header_8inc_8php.html#a51d6200b5e64a4fe13bc72a4939e2cda">else</a> <a class="el" href="#a666e2a4798fcb4b2c24f3079e7faae9b">foreach</a>($stats as $dep=&gt; $nb) <a class="el" href="index_8php.html#ab3f0cbd6c8a413da3747078785141b05">if</a>(empty( $stats_villes)) <a class="el" href="header_8inc_8php.html#a51d6200b5e64a4fe13bc72a4939e2cda">else</a> <a class="el" href="#a666e2a4798fcb4b2c24f3079e7faae9b">foreach</a>($stats_villes as $ville=&gt; $nb)&#160;</td><td class="memItemRight"><a class="el" href="#a2e1f3d2a7b03202e4e5fac21b9cb0df0">$historique</a></td></tr>
 <tr class="memitem:a417f437b4d0dd4f7750dd0ccfd8a7f2f" id="r_a417f437b4d0dd4f7750dd0ccfd8a7f2f"><td class="memItemLeft"><a class="el" href="#a666e2a4798fcb4b2c24f3079e7faae9b">foreach</a>($historique as $mois=&gt; $prix)&#160;</td><td class="memItemRight"><a class="el" href="#a417f437b4d0dd4f7750dd0ccfd8a7f2f">$carburants</a></td></tr>
 <tr class="memitem:a666e2a4798fcb4b2c24f3079e7faae9b" id="r_a666e2a4798fcb4b2c24f3079e7faae9b"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a666e2a4798fcb4b2c24f3079e7faae9b">foreach</a> ( $carburants as $nom=&gt; $cle) = $tr['source_prix']</td></tr>
 </table>
@@ -156,7 +156,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="index_8php.html#ab3f0cbd6c8a413da3747078785141b05">if</a>(empty($stats)) <a class="el" href="resultats_8php.html#a4d5758060af752155400a8bcb1ca41cd">else</a> <a class="el" href="#a666e2a4798fcb4b2c24f3079e7faae9b">foreach</a>( $stats as $dep=&gt; $nb) <a class="el" href="index_8php.html#ab3f0cbd6c8a413da3747078785141b05">if</a>(empty($stats_villes)) <a class="el" href="resultats_8php.html#a4d5758060af752155400a8bcb1ca41cd">else</a> <a class="el" href="#a666e2a4798fcb4b2c24f3079e7faae9b">foreach</a> ( $stats_villes as $ville=&gt; $nb) $historique</td>
+          <td class="memname"><a class="el" href="index_8php.html#ab3f0cbd6c8a413da3747078785141b05">if</a>(empty($stats)) <a class="el" href="header_8inc_8php.html#a51d6200b5e64a4fe13bc72a4939e2cda">else</a> <a class="el" href="#a666e2a4798fcb4b2c24f3079e7faae9b">foreach</a>( $stats as $dep=&gt; $nb) <a class="el" href="index_8php.html#ab3f0cbd6c8a413da3747078785141b05">if</a>(empty($stats_villes)) <a class="el" href="header_8inc_8php.html#a51d6200b5e64a4fe13bc72a4939e2cda">else</a> <a class="el" href="#a666e2a4798fcb4b2c24f3079e7faae9b">foreach</a> ( $stats_villes as $ville=&gt; $nb) $historique</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -203,7 +203,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">$moyennes = calculer_moyennes_nationales()</td>
+          <td class="memname">$moyennes = <a class="el" href="functions_8inc_8php.html#a34919f1508f50ea80605776689735e33">calculer_moyennes_nationales</a>()</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -273,7 +273,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">$toutes_stats = lire_statistiques($fichier_csv)</td>
+          <td class="memname">$toutes_stats = <a class="el" href="functions_8inc_8php.html#a4e2fe96e1640b52a245c208ee22c8560">lire_statistiques</a>($fichier_csv)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -287,7 +287,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">$toutes_stats_villes = lire_statistiques_villes($fichier_csv)</td>
+          <td class="memname">$toutes_stats_villes = <a class="el" href="functions_8inc_8php.html#a9f040ad08dc8d17f4cc8b7588185c07a">lire_statistiques_villes</a>($fichier_csv)</td>
         </tr>
       </table>
 </div><div class="memdoc">

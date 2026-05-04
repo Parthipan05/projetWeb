@@ -85,8 +85,8 @@ Variables</h2></td></tr>
 <tr class="memitem:a43e5b5a819fedbd12b8cf5421ba6985e" id="r_a43e5b5a819fedbd12b8cf5421ba6985e"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a43e5b5a819fedbd12b8cf5421ba6985e">$titre</a> = &quot;Accueil&quot;</td></tr>
 <tr class="memitem:a87b032cba06009e3467abf1c8018d960" id="r_a87b032cba06009e3467abf1c8018d960"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a87b032cba06009e3467abf1c8018d960">$description</a> = &quot;StationFinder - Trouvez les prix des carburants près de chez vous&quot;</td></tr>
 <tr class="memitem:ab3f0cbd6c8a413da3747078785141b05" id="r_ab3f0cbd6c8a413da3747078785141b05"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab3f0cbd6c8a413da3747078785141b05">if</a> (!empty( $_GET[ 'departement']) &amp;&amp;!empty( $_GET[ 'ville']))</td></tr>
-<tr class="memitem:a270fcd32e1040253108d7d58d43c6dcf" id="r_a270fcd32e1040253108d7d58d43c6dcf"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a270fcd32e1040253108d7d58d43c6dcf">$regions</a> = lire_regions(&quot;./data/v_region_2024.csv&quot;)</td></tr>
-<tr class="memitem:adad9b2799c69f4c9deb75ea73c6b12c8" id="r_adad9b2799c69f4c9deb75ea73c6b12c8"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#adad9b2799c69f4c9deb75ea73c6b12c8">$departements</a> = lire_departements(&quot;./data/v_departement_2024.csv&quot;)</td></tr>
+<tr class="memitem:a270fcd32e1040253108d7d58d43c6dcf" id="r_a270fcd32e1040253108d7d58d43c6dcf"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a270fcd32e1040253108d7d58d43c6dcf">$regions</a> = <a class="el" href="functions_8inc_8php.html#a4ae427b4638df3184d0b490c897fecec">lire_regions</a>(&quot;./data/v_region_2024.csv&quot;)</td></tr>
+<tr class="memitem:adad9b2799c69f4c9deb75ea73c6b12c8" id="r_adad9b2799c69f4c9deb75ea73c6b12c8"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#adad9b2799c69f4c9deb75ea73c6b12c8">$departements</a> = <a class="el" href="functions_8inc_8php.html#a2c5280ee2c5ebf2812de81352043d162">lire_departements</a>(&quot;./data/v_departement_2024.csv&quot;)</td></tr>
 <tr class="memitem:a3ccf9428c6d6ed1b545a2107a28992ff" id="r_a3ccf9428c6d6ed1b545a2107a28992ff"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a3ccf9428c6d6ed1b545a2107a28992ff">$ip_visiteur</a> = $_SERVER['REMOTE_ADDR'] ?? '193.54.115.18'</td></tr>
 <tr class="memitem:a5e5c4e2e08507f3330888125fe078179" id="r_a5e5c4e2e08507f3330888125fe078179"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a5e5c4e2e08507f3330888125fe078179">$url_geo</a> = &quot;https://ipinfo.io/&quot; . $ip_visiteur . &quot;/geo&quot;</td></tr>
 <tr class="memitem:a08be587066620dbd8fe10528feedce1a" id="r_a08be587066620dbd8fe10528feedce1a"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a08be587066620dbd8fe10528feedce1a">$lat_utilisateur</a> = 0.0</td></tr>
@@ -98,7 +98,7 @@ Variables</h2></td></tr>
 <tr class="memitem:aad5ce4aa6f8b5c17e21ccf2aa61b11e2" id="r_aad5ce4aa6f8b5c17e21ccf2aa61b11e2"><td class="memItemLeft"><a class="el" href="#ab3f0cbd6c8a413da3747078785141b05">if</a>($contenu_geo !==false)&#160;</td><td class="memItemRight"><a class="el" href="#aad5ce4aa6f8b5c17e21ccf2aa61b11e2">$region_selectionnee</a> = &quot;&quot;</td></tr>
 <tr class="memitem:aad74066dbab62d48d44b0ced3dbe145a" id="r_aad74066dbab62d48d44b0ced3dbe145a"><td class="memItemLeft"><a class="el" href="#ab3f0cbd6c8a413da3747078785141b05">if</a>(isset($_GET['region']) &amp;&amp;!empty($_GET['region']))&#160;</td><td class="memItemRight"><a class="el" href="#aad74066dbab62d48d44b0ced3dbe145a">$departement_selectionne</a> = &quot;&quot;</td></tr>
 <tr class="memitem:a244a936e9f2a72a8c0bfa3edbf3c0011" id="r_a244a936e9f2a72a8c0bfa3edbf3c0011"><td class="memItemLeft"><a class="el" href="#ab3f0cbd6c8a413da3747078785141b05">if</a>(isset($_GET['departement']) &amp;&amp;!empty($_GET['departement']))&#160;</td><td class="memItemRight"><a class="el" href="#a244a936e9f2a72a8c0bfa3edbf3c0011">$villes</a> = []</td></tr>
-<tr class="memitem:a84ffb9ee644c36241ec0f4ea58ec90cd" id="r_a84ffb9ee644c36241ec0f4ea58ec90cd"><td class="memItemLeft"><a class="el" href="#ab3f0cbd6c8a413da3747078785141b05">if</a>(!empty($departement_selectionne))&#160;</td><td class="memItemRight"><a class="el" href="#a84ffb9ee644c36241ec0f4ea58ec90cd">$derniere</a> = get_derniere_consultation()</td></tr>
+<tr class="memitem:a84ffb9ee644c36241ec0f4ea58ec90cd" id="r_a84ffb9ee644c36241ec0f4ea58ec90cd"><td class="memItemLeft"><a class="el" href="#ab3f0cbd6c8a413da3747078785141b05">if</a>(!empty($departement_selectionne))&#160;</td><td class="memItemRight"><a class="el" href="#a84ffb9ee644c36241ec0f4ea58ec90cd">$derniere</a> = <a class="el" href="functions_8inc_8php.html#a693e78bad792d83a98d1f7ea5e81964a">get_derniere_consultation</a>()</td></tr>
 <tr class="memitem:aa97c8e12a31aafa617afe0c9f4e29aa2" id="r_aa97c8e12a31aafa617afe0c9f4e29aa2"><td class="memItemLeft">if($derniere !==null) if(!empty( $ville_geolocalisee) &amp;&amp;!empty( $region_geolocalisee))&#160;</td><td class="memItemRight"><a class="el" href="#aa97c8e12a31aafa617afe0c9f4e29aa2">if</a> (!empty( $region_selectionnee) &amp;&amp;isset( $departements[ $region_selectionnee])) = $tr['carte_legende']</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
@@ -155,7 +155,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">$departements = lire_departements(&quot;./data/v_departement_2024.csv&quot;)</td>
+          <td class="memname">$departements = <a class="el" href="functions_8inc_8php.html#a2c5280ee2c5ebf2812de81352043d162">lire_departements</a>(&quot;./data/v_departement_2024.csv&quot;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -169,7 +169,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#ab3f0cbd6c8a413da3747078785141b05">if</a> (!empty( $departement_selectionne)) $derniere = get_derniere_consultation()</td>
+          <td class="memname"><a class="el" href="#ab3f0cbd6c8a413da3747078785141b05">if</a> (!empty( $departement_selectionne)) $derniere = <a class="el" href="functions_8inc_8php.html#a693e78bad792d83a98d1f7ea5e81964a">get_derniere_consultation</a>()</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -267,7 +267,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">$regions = lire_regions(&quot;./data/v_region_2024.csv&quot;)</td>
+          <td class="memname">$regions = <a class="el" href="functions_8inc_8php.html#a4ae427b4638df3184d0b490c897fecec">lire_regions</a>(&quot;./data/v_region_2024.csv&quot;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -337,7 +337,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">if($contenu_api !==false &amp;&amp;strpos($contenu_api, '&lt;?xml') <a class="el" href="resultats_8php.html#a4d5758060af752155400a8bcb1ca41cd">else</a> !==false) </td>
+          <td class="memname">if($contenu_api !==false &amp;&amp;strpos($contenu_api, '&lt;?xml') <a class="el" href="header_8inc_8php.html#a51d6200b5e64a4fe13bc72a4939e2cda">else</a> !==false) </td>
           <td>(</td>
           <td class="paramtype">!</td>          <td class="paramname"><span class="paramname"><em>empty</em></span> $_GET[ 'departement']) &amp;&amp;!empty( $_GET[ 'ville']</td><td>)</td>
           <td></td>
@@ -345,8 +345,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">        $stations = <a class="code hl_variable" href="resultats_8php.html#a09265cb0e0a963168f34a74bfdd08161">$donnees</a>[<span class="stringliteral">&#39;results&#39;</span>]</div>
-<div class="ttc" id="aresultats_8php_html_a09265cb0e0a963168f34a74bfdd08161"><div class="ttname"><a href="resultats_8php.html#a09265cb0e0a963168f34a74bfdd08161">$donnees</a></div><div class="ttdeci">$donnees</div><div class="ttdef"><b>Definition</b> resultats.php:142</div></div>
+<div class="line">    $lang = <span class="stringliteral">&#39;fr&#39;</span></div>
 </div><!-- fragment -->
 </div>
 </div>

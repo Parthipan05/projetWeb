@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['site_0',['URLs du site',['../md_readme.html#autotoc_md2',1,'']]],
-  ['sitemap_2ephp_1',['sitemap.php',['../sitemap_8php.html',1,'']]],
-  ['sources_2ephp_2',['sources.php',['../sources_8php.html',1,'']]],
-  ['stationfinder_3',['StationFinder',['../md_readme.html',1,'']]],
-  ['stats_2ephp_4',['stats.php',['../stats_8php.html',1,'']]]
+  ['if_0',['if',['../index_8php.html#ab3f0cbd6c8a413da3747078785141b05',1,'if:&#160;index.php'],['../index_8php.html#aa97c8e12a31aafa617afe0c9f4e29aa2',1,'if:&#160;index.php'],['../resultats_8php.html#a101ceca1323405c7fc79e49c68b9acf0',1,'if:&#160;resultats.php'],['../resultats_8php.html#ab5b07a5855fd832014301964db5d5725',1,'if:&#160;resultats.php']]],
+  ['incrementer_5fhits_1',['incrementer_hits',['../functions_8inc_8php.html#a254db296528cee7f2193357635980ba3',1,'functions.inc.php']]],
+  ['index_2ephp_2',['index.php',['../index_8php.html',1,'']]]
 ];
