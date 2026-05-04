@@ -36,7 +36,7 @@ $departements = lire_departements("./data/v_departement_2024.csv");
 
 // Géolocalisation automatique par IP (API ipinfo.io - format JSON)
 $ip_visiteur = $_SERVER['REMOTE_ADDR'] ?? '193.54.115.18';
-$url_geo = "https://ipinfo.io/" . $ip_visiteur . "/geo";
+$url_geo = "https://ipinfo.io/" . $ip_visiteur . "/geo?token=93ee1b08d3def2";
 $lat_utilisateur = 0.0;
 $lon_utilisateur = 0.0;
 $ville_geolocalisee = "";
